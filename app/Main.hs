@@ -1,29 +1,46 @@
 module Main where
 
-import Lib (cycleWorkSpaces)
+import Control.Monad (void)
 import System.Environment (getArgs)
+import System.Process (readProcess)
+import Types (InputLine, Mode (Down, Up), Workspace (..), WorkspaceDescription (..), WorkspaceNumber)
 
 main :: IO ()
-main = getArgs >>= interact . cycleWorkspacesWithMode . modeFromArgs
+main = do
+  mode <- fmap modeFromArgs getArgs
+  input <- fmap lines getContents
+  void $ readProcess "swaymsg" ["workspace", "number", nextWorkspace mode input] swayMsgStdIn
 
-data Mode = Up | Down
+swayMsgStdIn :: String
+swayMsgStdIn = ""
 
-data Workspace = Workspace
-  { output :: String,
-    workspaceIndex :: Int,
-    focused :: Bool
-  }
-  deriving (Show)
+workspaceDescription :: String -> WorkspaceDescription
+workspaceDescription = WorkspaceDescription
 
-cycleWorkspacesWithMode :: Mode -> String -> String
-cycleWorkspacesWithMode _ input = show $ map (parseWorkspace . words) (lines input)
-
-parseWorkspace :: [String] -> Workspace
-parseWorkspace input = Workspace {output = output, workspaceIndex = workspaceIndex, focused = focused}
+nextWorkspace :: Mode -> [InputLine] -> WorkspaceNumber
+nextWorkspace Up input = (show . next . onlyFocusedOutput) workspaces
   where
-    output = head input
-    workspaceIndex = read (input !! 1) :: Int
-    focused = (input !! 2) == "true"
+    workspaces = map parseWorkspace input
+nextWorkspace Down input = (show . previous . onlyFocusedOutput) workspaces
+  where
+    workspaces = map parseWorkspace input
+
+next :: [Workspace] -> Int
+next _ = 4
+
+previous :: [Workspace] -> Int
+previous _ = 1
+
+onlyFocusedOutput :: [Workspace] -> [Workspace]
+onlyFocusedOutput _ = []
+
+parseWorkspace :: String -> Workspace
+parseWorkspace inputLine = Workspace {output = output, workspaceIndex = workspaceIndex, focused = focused}
+  where
+    items = words inputLine
+    output = head items
+    workspaceIndex = (read . head . tail) items :: Int
+    focused = last items == "true"
 
 modeFromArgs :: a -> Mode
 modeFromArgs = const Up
