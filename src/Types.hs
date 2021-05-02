@@ -1,14 +1,10 @@
-module Types (InputLine, Mode (Up, Down)) where
-
-{-# ANN module "HLint: ignore Use newtype instead of data" #-}
-
-data Mode = Up | Down
+module Types (WorkspaceDescription (..), InputLine, WorkspaceNumber, Workspace (..)) where
 
 type InputLine = String
 
 type WorkspaceNumber = String
 
-data WorkspaceDescription = WorkspaceDescription String
+type WorkspaceDescription = String
 
 data Workspace = Workspace
   { output :: String,
