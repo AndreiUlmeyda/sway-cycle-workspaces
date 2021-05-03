@@ -1,21 +1,22 @@
 module Lib (nextWorkspace, next, previous) where
 
-import Mode (Mode (Down, Up))
+import Mode (Mode (Next, Previous))
 import Types (InputLine, Workspace (..), WorkspaceDescription (..), WorkspaceNumber)
 
 nextWorkspace :: Mode -> [InputLine] -> WorkspaceNumber
 nextWorkspace mode input =
   case mode of
-    Up -> (show . next . onlyFocusedOutput) workspaces
-    Down -> (show . previous . onlyFocusedOutput) workspaces
+    Next -> changeWorkspace next
+    Previous -> changeWorkspace previous
   where
     workspaces = map parseWorkspace input
+    changeWorkspace nextOrPrevious = (show . nextOrPrevious . onlyFocusedOutput) workspaces
 
 next :: [Workspace] -> Int
-next _ = 4
+next workspaces = 1
 
 previous :: [Workspace] -> Int
-previous _ = 1
+previous workspaces = 1
 
 onlyFocusedOutput :: [Workspace] -> [Workspace]
 onlyFocusedOutput workspaces = filter isFocusedOutput workspaces
@@ -23,9 +24,12 @@ onlyFocusedOutput workspaces = filter isFocusedOutput workspaces
     isFocusedOutput workspace = output workspace == (output . head) (filter focused workspaces)
 
 parseWorkspace :: WorkspaceDescription -> Workspace
-parseWorkspace inputLine = Workspace {output = output, workspaceIndex = workspaceIndex, focused = focused}
+parseWorkspace inputLine =
+  Workspace
+    { output = head items,
+      workspaceIndex = (read . secondItem) items :: Int,
+      focused = last items == "true"
+    }
   where
     items = words inputLine
-    output = head items
-    workspaceIndex = (read . head . tail) items :: Int
-    focused = last items == "true"
+    secondItem = head . tail
