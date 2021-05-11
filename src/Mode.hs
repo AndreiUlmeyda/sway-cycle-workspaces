@@ -2,5 +2,9 @@ module Mode (modeFromArgs, Mode (Next, Previous)) where
 
 data Mode = Next | Previous
 
-modeFromArgs :: a -> Mode
-modeFromArgs = const Next
+type Argument = String
+
+modeFromArgs :: [Argument] -> Mode
+modeFromArgs arguments
+  | "-d" `elem` arguments = Previous
+  | otherwise = Next

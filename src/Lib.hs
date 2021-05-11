@@ -13,10 +13,10 @@ nextWorkspace mode input =
     changeWorkspace nextOrPrevious = (show . nextOrPrevious . onlyFocusedOutput) workspaces
 
 next :: [Workspace] -> Int
-next workspaces = 1
+next = workspaceIndex . head . tail . dropWhile (not . focused)
 
 previous :: [Workspace] -> Int
-previous workspaces = 1
+previous = workspaceIndex . last . takeWhile (not . focused)
 
 onlyFocusedOutput :: [Workspace] -> [Workspace]
 onlyFocusedOutput workspaces = filter isFocusedOutput workspaces
