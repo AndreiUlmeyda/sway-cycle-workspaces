@@ -6,5 +6,5 @@ type Argument = String
 
 modeFromArgs :: [Argument] -> Mode
 modeFromArgs arguments
-  | "-p" `elem` arguments = Previous
+  | "previous" `elem` arguments = Previous
   | otherwise = Next
