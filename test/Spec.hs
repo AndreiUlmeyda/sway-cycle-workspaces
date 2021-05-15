@@ -1,5 +1,5 @@
 import Data.Either ()
-import Errors (ErrorMessage, errorTooFewInputWorkspaces, errorWrongInputLayout)
+import Errors (ErrorMessage, errorNoNextWorkspace, errorTooFewInputWorkspaces, errorWrongInputLayout)
 import Lib (WorkspaceIndex (WorkspaceIndex), changeWorkspace)
 import Mode (Mode (Next, Previous))
 import Test.Hspec (describe, hspec, it, shouldBe)
@@ -17,3 +17,6 @@ main = hspec $ do
     it "given focus on the first workspace and Next-Mode should return the second" $ do
       let workspaceDesciption = ["output 1 true", "output 2 false"]
        in changeWorkspace Next workspaceDesciption `shouldBe` Right (WorkspaceIndex "2")
+    it "given focus on the last workspace and Next-Mode should return an error indicating that there is no next workspace" $ do
+      let workspaceDesciption = ["output 1 false", "output 2 true"]
+       in changeWorkspace Next workspaceDesciption `shouldBe` Left errorNoNextWorkspace
