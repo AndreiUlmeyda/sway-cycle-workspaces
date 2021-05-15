@@ -1,5 +1,6 @@
-module Lib (nextWorkspace, next, previous) where
+module Lib (nextWorkspace, newNextWorkspace, next, previous, ErrorMessage (ErrorMessage), WorkspaceIndex (WorkspaceIndex)) where
 
+import Data.Either
 import Mode (Mode (Next, Previous))
 import Types (InputLine, Workspace (..), WorkspaceDescription (..), WorkspaceNumber)
 
@@ -33,3 +34,15 @@ parseWorkspace inputLine =
   where
     items = words inputLine
     secondItem = head . tail
+
+newtype ErrorMessage = ErrorMessage String deriving (Show, Eq)
+
+newtype WorkspaceIndex = WorkspaceIndex String deriving (Show, Eq)
+
+newNextWorkspace :: Mode -> [String] -> Either ErrorMessage WorkspaceIndex
+newNextWorkspace _ workspaces
+  | length workspaces <= 1 = Left (ErrorMessage "Only zero or one lines/workspaces provided. There is nothing to do.")
+  | any otherThanThreeWordsLong workspaces = Left (ErrorMessage "Each input line must contain 3 items following the pattern 'output workspacename focused' where focused is either 'true' or 'false'")
+  | otherwise = Right $ WorkspaceIndex $ (head . tail . words) (workspaces !! 1)
+  where
+    otherThanThreeWordsLong = (/= 3) . length . words
