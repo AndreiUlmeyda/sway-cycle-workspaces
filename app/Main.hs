@@ -1,12 +1,17 @@
 module Main where
 
-import Lib (changeWorkspace)
+import Errors (ErrorMessage (ErrorMessage))
+import Lib (WorkspaceIndex (WorkspaceIndex), changeWorkspace)
 import Mode (Mode, modeFromArgs)
 import System.Environment (getArgs)
-import Types (InputLine)
+import Types (InputLine, Workspace (workspaceIndex))
 
 main :: IO ()
 main = do
   mode <- fmap modeFromArgs getArgs
   input <- fmap lines getContents
-  print (changeWorkspace mode input)
+  printOutput (changeWorkspace mode input)
+
+printOutput :: Either ErrorMessage WorkspaceIndex -> IO ()
+printOutput (Left (ErrorMessage errorMessage)) = print errorMessage
+printOutput (Right (WorkspaceIndex workspaceIndex)) = print workspaceIndex
