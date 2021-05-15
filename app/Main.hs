@@ -13,5 +13,5 @@ main = do
   printOutput (changeWorkspace mode input)
 
 printOutput :: Either ErrorMessage WorkspaceIndex -> IO ()
-printOutput (Left (ErrorMessage errorMessage)) = print errorMessage
+printOutput (Left (ErrorMessage errorMessage)) = error errorMessage
 printOutput (Right (WorkspaceIndex workspaceIndex)) = print workspaceIndex
