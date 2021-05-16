@@ -3,12 +3,15 @@ import Errors (ErrorMessage, errorNoNextWorkspace, errorNoPreviousWorkspace, err
 import Lib (WorkspaceIndex (WorkspaceIndex), changeWorkspace)
 import Mode (Mode (Next, Previous))
 import Test.Hspec (describe, hspec, it, shouldBe)
-import Test.QuickCheck (Gen, Testable (property), arbitrary, forAll)
+import Test.QuickCheck (Arbitrary, Gen, Testable (property), arbitrary, elements, forAll)
+
+instance Arbitrary Mode where
+  arbitrary = elements [Next, Previous]
 
 main :: IO ()
 main = hspec $ do
   describe "newNextWorkspae" $ do
-    it "given no input it should return an error indicating insufficient input" $ do
+    it "given no input should return an error indicating insufficient input" $ do
       changeWorkspace Previous [] `shouldBe` Left errorTooFewInputWorkspaces
     it "given only empty lines should return an error indicating the proper input layout" $ do
       changeWorkspace Previous ["", "", ""] `shouldBe` Left errorWrongInputLayout
@@ -37,4 +40,4 @@ main = hspec $ do
       let workspaceDesciption = ["output1 1 true", "output2 2 false", "output1 3 false"]
        in changeWorkspace Next workspaceDesciption `shouldBe` Right (WorkspaceIndex "3")
     it "given random input should never fall through to an unhandled case" $ do
-      property $ forAll (arbitrary :: Gen [String]) $ \randomList -> changeWorkspace Previous randomList /= Left errorUnexpectedInput
+      property $ forAll (arbitrary :: Gen ([String], Mode)) $ \(randomList, randomMode) -> changeWorkspace randomMode randomList /= Left errorUnexpectedInput

@@ -1,6 +1,6 @@
 module Mode (modeFromArgs, Mode (Next, Previous)) where
 
-data Mode = Next | Previous
+data Mode = Next | Previous deriving (Show)
 
 type Argument = String
 
