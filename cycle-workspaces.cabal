@@ -28,7 +28,6 @@ library
       Errors
       Lib
       Mode
-      Types
   other-modules:
       Paths_cycle_workspaces
   hs-source-dirs:

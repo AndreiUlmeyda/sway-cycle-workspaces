@@ -11,7 +11,6 @@ import Errors
     errorWrongInputLayout,
   )
 import Mode (Mode (Next, Previous))
-import Types (InputLine, Workspace (..), WorkspaceDescription (..), WorkspaceNumber)
 
 newtype WorkspaceIndex = WorkspaceIndex String deriving (Show, Eq)
 
