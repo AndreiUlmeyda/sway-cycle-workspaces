@@ -30,8 +30,8 @@ changeWorkspace mode workspaces
     (isFocused . head) workspaces =
     Left errorNoPreviousWorkspace
   -- determine the new workspace index
-  | Previous <- mode = Right $ WorkspaceIndex $ (getWorkspaceIndex . last) (takeWhile (not . isFocused) workspacesFromFocusedOutput)
-  | Next <- mode = Right $ WorkspaceIndex $ (getWorkspaceIndex . secondElement) (dropWhile (not . isFocused) workspacesFromFocusedOutput)
+  | Previous <- mode = (Right . WorkspaceIndex . getWorkspaceIndex . last) (takeWhile (not . isFocused) workspacesFromFocusedOutput)
+  | Next <- mode = (Right . WorkspaceIndex . getWorkspaceIndex . secondElement) (dropWhile (not . isFocused) workspacesFromFocusedOutput)
   | otherwise = Left errorUnexpectedInput
   where
     workspacesFromFocusedOutput = onlyFocusedOutput workspaces

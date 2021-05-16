@@ -1,8 +1,9 @@
 import Data.Either ()
-import Errors (ErrorMessage, errorNoNextWorkspace, errorNoPreviousWorkspace, errorNotExactlyOneFocusedWorkspace, errorTooFewInputWorkspaces, errorWrongInputLayout)
+import Errors (ErrorMessage, errorNoNextWorkspace, errorNoPreviousWorkspace, errorNotExactlyOneFocusedWorkspace, errorTooFewInputWorkspaces, errorUnexpectedInput, errorWrongInputLayout)
 import Lib (WorkspaceIndex (WorkspaceIndex), changeWorkspace)
 import Mode (Mode (Next, Previous))
 import Test.Hspec (describe, hspec, it, shouldBe)
+import Test.QuickCheck (Gen, Testable (property), arbitrary, forAll)
 
 main :: IO ()
 main = hspec $ do
@@ -35,3 +36,5 @@ main = hspec $ do
     it "given workspaces on multiple outputs it should only respect the focused output" $ do
       let workspaceDesciption = ["output1 1 true", "output2 2 false", "output1 3 false"]
        in changeWorkspace Next workspaceDesciption `shouldBe` Right (WorkspaceIndex "3")
+    it "given random input should never fall through to an unhandled case" $ do
+      property $ forAll (arbitrary :: Gen [String]) $ \randomList -> changeWorkspace Previous randomList /= Left errorUnexpectedInput
