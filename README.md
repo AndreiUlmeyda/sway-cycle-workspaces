@@ -10,11 +10,14 @@ It was built to accomodate my specific use case where Mod-Key+Scroll-Up is suppo
 Imagine a configuration of two monitors with 3 workspaces each:
 <br/> `(1 2* 3) (4 5 6)`<br/>
 where workspace 2 is focused, which is indicated by an asterisk.
-Mod-Key+**Scroll-Up** would take the workspaces to the configuration<br/>`(1 2 3*) (4 5 6)`<br/>
+Mod-Key+**Scroll-Up** would take the workspaces to the configuration
+<br/>`(1 2 3*) (4 5 6)`<br/>
 with repeating Mod-Key+Scroll-Up presses leaving the focus unchanged.
 
-Repeated Mod-Key+**Scroll-Down** presses would, initially, return to the starting point<br/>`1 2* 3) (4 5 6)`,<br/>
-then to<br/>`(1* 2 3) (4 5 6)`<br/>
+Repeated Mod-Key+**Scroll-Down** presses would, initially, return to the starting point
+<br/>`1 2* 3) (4 5 6)`,<br/>
+then to
+<br/>`(1* 2 3) (4 5 6)`<br/>
 and then remain there.
 
 ## how it does it

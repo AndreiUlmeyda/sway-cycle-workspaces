@@ -10,7 +10,7 @@ instance Arbitrary Mode where
 
 main :: IO ()
 main = hspec $ do
-  describe "newNextWorkspae" $ do
+  describe "changeWorkspace" $ do
     it "given no input should return an error indicating insufficient input" $ do
       changeWorkspace Previous [] `shouldBe` Left errorTooFewInputWorkspaces
     it "given only empty lines should return an error indicating the proper input layout" $ do
