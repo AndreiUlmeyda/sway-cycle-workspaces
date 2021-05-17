@@ -1,44 +1,41 @@
-name:                cycle-workspaces
+name:                sway-cycle-workspaces
 version:             0.1.0.0
-github:              "githubuser/cycle-workspaces"
-license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2021 Author name here"
+github:              "AndreiUlmeyda/sway-cycle-workspaces"
+license:             "Unlicense"
+author:              "Adrian Schurz"
+maintainer:          "ulmeyda.smile@gmail.com"
+copyright:           "2021 Adrian Schurz"
 
 extra-source-files:
 - README.md
 - ChangeLog.md
+- LICENSE
 
-# Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
+synopsis:            A tool to switch workspaces up or down on the currently focused monitor.
+category:            Sway
 
-# To avoid duplicated efforts in documentation and dealing with the
-# complications of embedding Haddock markup inside cabal files, it is
-# common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/cycle-workspaces#readme>
+description:         Please see the README on GitHub at <https://github.com/AndreiUlmeyda/sway-cycle-workspaces/blob/master/README.md>
 
 dependencies:
 - base >= 4.7 && < 5
-- process
 
 library:
   source-dirs: src
 
 executables:
-  cycle-workspaces-exe:
+  new-workspace-focus:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
+    - -O2
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - cycle-workspaces
+    - sway-cycle-workspaces
 
 tests:
-  cycle-workspaces-test:
+  new-workspace-focus-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -46,6 +43,6 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - cycle-workspaces
+    - sway-cycle-workspaces
     - hspec
     - QuickCheck

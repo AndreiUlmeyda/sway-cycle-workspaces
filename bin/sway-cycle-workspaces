@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+
+swaymsg -t get_workspaces | ./json-to-workspace-lines.jq | ./new-workspace-focus "$1" | xargs swaymsg workspace number
