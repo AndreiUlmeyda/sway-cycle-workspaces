@@ -3,6 +3,7 @@ import Errors (ErrorMessage, errorNoNextWorkspace, errorNoPreviousWorkspace, err
 import Lib (WorkspaceIndex (WorkspaceIndex), changeWorkspace)
 import Mode (Mode (Next, Previous))
 import Test.Hspec (describe, hspec, it, shouldBe)
+import Test.Hspec.QuickCheck (modifyMaxSuccess, prop)
 import Test.QuickCheck (Arbitrary, Gen, Testable (property), arbitrary, elements, forAll)
 
 instance Arbitrary Mode where
@@ -39,5 +40,6 @@ main = hspec $ do
     it "given workspaces on multiple outputs it should only respect the focused output" $ do
       let workspaceDesciption = ["output1 1 true", "output2 2 false", "output1 3 false"]
        in changeWorkspace Next workspaceDesciption `shouldBe` Right (WorkspaceIndex "3")
-    it "given random input should never fall through to an unhandled case" $ do
-      property $ forAll (arbitrary :: Gen ([String], Mode)) $ \(randomList, randomMode) -> changeWorkspace randomMode randomList /= Left errorUnexpectedInput
+    modifyMaxSuccess (const 3000) $ do
+      prop "given random input should never fall through to an unhandled case" $ do
+        forAll (arbitrary :: Gen ([String], Mode)) $ \(randomList, randomMode) -> changeWorkspace randomMode randomList /= Left errorUnexpectedInput

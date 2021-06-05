@@ -8,7 +8,6 @@ copyright:           "2021 Adrian Schurz"
 
 extra-source-files:
 - README.md
-- ChangeLog.md
 - LICENSE
 
 synopsis:            A tool to switch workspaces up or down on the currently focused monitor.
