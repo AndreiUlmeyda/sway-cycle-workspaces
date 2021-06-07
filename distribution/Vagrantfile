@@ -1,34 +1,24 @@
 $script = <<-SCRIPT
 
+# sysupdate, mainly to get the latest certificates
 pacman --noconfirm -Syyu
+# install dependencies located in the main repositories
 pacman --noconfirm --needed -S base-devel git go jq sway
 
+# install an AUR-helper
 runuser -l vagrant -c 'git clone https://aur.archlinux.org/yay.git; cd yay; yes | makepkg -si'
-runuser -l vagrant -c 'git clone https://github.com/AndreiUlmeyda/sway-cycle-workspaces.git; cd sway-cycle-workspaces; git checkout arch-package;'
-runuser -l vagrant -c 'yay -S --noconfirm stack'
+
+# install AUR dependency
 runuser -l vagrant -c 'yay -S --noconfirm stack'
 
+# download the package under test, try to build its PKGBUILD
+runuser -l vagrant -c 'git clone https://github.com/AndreiUlmeyda/sway-cycle-workspaces.git; cd sway-cycle-workspaces; git checkout arch-package;'
 runuser -l vagrant -c 'cd sway-cycle-workspaces/distribution; makepkg;'
 
 SCRIPT
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "archlinux/archlinux" #"ubuntu/bionic64"
-
-#   ## For masterless, mount your salt file root
-#   config.vm.synced_folder "/home/adrian/workspace/cycle-workspaces/distribution/salt", "/srv/salt/"
+  config.vm.box = "archlinux/archlinux"
 
 config.vm.provision "shell", inline: $script
-#   ## Use all the defaults:
-#   config.vm.provision :salt do |salt|
-
-#     salt.masterless = true
-#     salt.minion_config = "salt/minion"
-#     salt.run_highstate = true
-
-#   end
-
-#   config.vm.provider :virtualbox do |vb|
-#     vb.gui = true
-#   end
 end
