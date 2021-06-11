@@ -12,20 +12,19 @@ install=
 changelog=
 source=("git+git://github.com/AndreiUlmeyda/sway-cycle-workspaces")
 noextract=()
-md5sums=()
+sha256sums=('SKIP')
 validpgpkeys=()
 
 build() {
-	cd "$pkgname-$pkgver"
+	cd "$pkgname"
 	stack build
 }
 
 check() {
-	cd "$pkgname-$pkgver"
+	cd "$pkgname"
 	stack test
 }
 
 package() {
-	cd "$pkgname-$pkgver"
-	make DESTDIR="$pkgdir/" install
+	cd "$pkgname"
 }
