@@ -28,7 +28,7 @@ package() {
 	mkdir -p "$pkgdir/usr/lib/${pkgname}"
 
 	cd "$pkgname"
-	cp bin/sway-cycle-workspaces "$pkgdir/usr/bin"
-	cp bin/new-workspace-focus "$pkgdir/usr/lib/${pkgname}"
-	cp bin/json-to-workspace-lines.jq "$pkgdir/usr/lib/${pkgname}"
+	cp bin/sway-cycle-workspaces "$pkgdir/usr/bin/sway-cycle-workspaces"
+	cp bin/new-workspace-focus "$pkgdir/usr/lib/${pkgname}/new-workspace-focus"
+	cp bin/json-to-workspace-lines.jq "$pkgdir/usr/lib/${pkgname}/json-to-workspace-lines.jq"
 }
