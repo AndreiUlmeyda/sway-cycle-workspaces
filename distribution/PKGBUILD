@@ -9,15 +9,15 @@ license=('Unlicense')
 depends=('stack' 'bash' 'findutils' 'jq' 'sway')
 options=()
 install=
-changelog=
 source=("git+git://github.com/AndreiUlmeyda/sway-cycle-workspaces")
 noextract=()
 sha256sums=('SKIP')
 validpgpkeys=()
 
 build() {
+	ls "${srcdir}"
 	cd "$pkgname"
-	stack build
+	stack build --copy-bins
 }
 
 check() {
@@ -26,5 +26,10 @@ check() {
 }
 
 package() {
+	mkdir "$pkgdir/usr/lib/${pkgname}"
+
 	cd "$pkgname"
+	cp bin/sway-cycle-workspaces "$pkgdir/usr/bin"
+	cp bin/new-workspace-focus "$pkgdir/usr/lib/${pkgname}"
+	cp bin/json-to-workspace-lines.jq "$pkgdir/usr/lib/${pkgname}"
 }
