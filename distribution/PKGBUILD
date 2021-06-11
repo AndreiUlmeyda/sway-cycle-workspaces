@@ -26,6 +26,7 @@ check() {
 
 package() {
 	mkdir -p "$pkgdir/usr/lib/${pkgname}"
+	mkdir -p "$pkgdir/usr/bin/"
 
 	cd "$pkgname"
 	cp bin/sway-cycle-workspaces "$pkgdir/usr/bin/sway-cycle-workspaces"
