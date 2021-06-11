@@ -15,7 +15,6 @@ sha256sums=('SKIP')
 validpgpkeys=()
 
 build() {
-	ls "${srcdir}"
 	cd "$pkgname"
 	stack build --copy-bins
 }
@@ -26,7 +25,7 @@ check() {
 }
 
 package() {
-	mkdir "$pkgdir/usr/lib/${pkgname}"
+	mkdir -p "$pkgdir/usr/lib/${pkgname}"
 
 	cd "$pkgname"
 	cp bin/sway-cycle-workspaces "$pkgdir/usr/bin"

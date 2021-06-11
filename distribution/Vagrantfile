@@ -13,12 +13,11 @@ runuser -l vagrant -c 'yay -S --noconfirm stack'
 
 # download the package under test, try to build its PKGBUILD
 runuser -l vagrant -c 'git clone https://github.com/AndreiUlmeyda/sway-cycle-workspaces.git; cd sway-cycle-workspaces; git checkout arch-package;'
-runuser -l vagrant -c 'cd sway-cycle-workspaces/distribution; makepkg;'
+runuser -l vagrant -c 'cd sway-cycle-workspaces/distribution; makepkg; sudo pacman -U sway-cycle-workspaces-0.0.1-1-x86_64.pkg.tar.zst;'
 
 SCRIPT
 
 Vagrant.configure("2") do |config|
   config.vm.box = "archlinux/archlinux"
-
-config.vm.provision "shell", inline: $script
+  config.vm.provision "shell", inline: $script
 end
