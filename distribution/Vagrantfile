@@ -1,21 +1,42 @@
-# 
+# This is used to develop and test a Arch-Linux package.
+#
+# A vanilla Arch-Linux virtual machine is started and a
+# script is supplied which is executed on the virtual
+# machine.
+#
+# The goal of this are:
+# 1. Generate a valid Arch-Linux package using the file distribution/PKGBUILD.
+# 2. Install that package using the Arch-Linux package manager.
+# 3. Verify that the software package does not run into obvious errors like
+#    wrong paths.
+# 4. Uninstall the package using the Arch-Linux package manager.
 
 $testPackageBuildAndInstall = <<-SCRIPT
 
-# sysupdate, mainly to get the latest certificates
+# Full system update, mainly to get the latest certificates and enable subsequent installs.
 pacman --noconfirm -Syyu
-# install dependencies located in the main repositories
+
+# Install dependencies located in the main repositories. Vim is there just for convenience when
+# logged into the virtual machine.
 pacman --noconfirm --needed -S base-devel git go jq sway vim
 
-# install an AUR-helper
+# Install an AUR-helper.
 runuser -l vagrant -c 'git clone https://aur.archlinux.org/yay.git; cd yay; yes | makepkg -si'
 
-# install AUR dependency
+# Install AUR dependencies.
 runuser -l vagrant -c 'yay -S --noconfirm stack'
 
-# download the package under test, try to build its PKGBUILD
-runuser -l vagrant -c 'git clone https://github.com/AndreiUlmeyda/sway-cycle-workspaces.git; cd sway-cycle-workspaces;'
+# Download the software repository under test, try to build its PKGBUILD and then install the package.
+runuser -l vagrant -c 'git clone https://github.com/AndreiUlmeyda/sway-cycle-workspaces.git;'
 runuser -l vagrant -c 'cd sway-cycle-workspaces/distribution; makepkg; sudo pacman --noconfirm -U sway-cycle-workspaces-0.0.1-1-x86_64.pkg.tar.zst;'
+
+# Run the main executable. A bunch of errors is expected since sway is not running.
+# Errors which are NOT SUPPOSED TO OCCUR are ones due to the main executable referencing its
+# dependencies using wrong paths.
+runuser -l vagrant -c 'sway-cycle-workspaces;'
+
+# Uninstall the package.
+pacman -Rns sway-cycle-workspaces
 
 SCRIPT
 
