@@ -1,0 +1,35 @@
+# Maintainer: Adrian Schurz schurz.adrian@gmail.com>
+pkgname=sway-cycle-workspaces
+pkgver=0.0.1
+pkgrel=1
+pkgdesc="A tool to switch sway workspaces up or down on the currently focused monitor"
+arch=('x86_64')
+url="https://github.com/AndreiUlmeyda/sway-cycle-workspaces"
+license=('Unlicense')
+depends=('stack' 'bash' 'findutils' 'jq' 'sway')
+options=()
+install=
+source=("git+git://github.com/AndreiUlmeyda/sway-cycle-workspaces#branch=arch-package")
+noextract=()
+sha256sums=('SKIP')
+validpgpkeys=()
+
+build() {
+	cd "$pkgname"
+	stack build --copy-bins
+}
+
+check() {
+	cd "$pkgname"
+	stack test
+}
+
+package() {
+	mkdir -p "$pkgdir/usr/lib/${pkgname}"
+	mkdir -p "$pkgdir/usr/bin/"
+
+	cd "$pkgname"
+	cp bin/sway-cycle-workspaces "$pkgdir/usr/bin/sway-cycle-workspaces"
+	cp bin/new-workspace-focus "$pkgdir/usr/lib/${pkgname}/new-workspace-focus"
+	cp bin/json-to-workspace-lines.jq "$pkgdir/usr/lib/${pkgname}/json-to-workspace-lines.jq"
+}
