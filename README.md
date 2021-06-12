@@ -1,5 +1,5 @@
 # sway-cycle-workspaces
-A tool to **switch** sway **workspaces** in a particular way, namely **either up or down considering only the monitor/output containing the focused window**.
+A tool to **switch** [sway](https://swaywm.org/) **workspaces** in a particular way, namely **either up or down considering only the monitor/output containing the focused window**.
 It was built to accomodate my specific use case where Mod-Key+Scroll-Up is supposed to go to the next workspace on the focused monitor and Mod-Key+Scroll-Down to do the reverse.
 
 **By the time you read this it may be possible to produce the same behaviour by configuring sway directly. When I needed the feature I could not figure out a way to do it that way and I was eager to write a bit of Haskell, so here we are. Read the sway documentation more carefully than I did before installing additional software.**
@@ -27,7 +27,7 @@ look like
 
 ## installation
 In case this did not come preinstalled on your linux distribution - it would be highly concerning if it did - you can choose one of two methods to install this tool. For both you will need to download the source files first and make sure at least one dependency ([stack](https://docs.haskellstack.org/en/stable/README/)) is installed manually.
-Install stack, either from the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository) or using the method described on their website. Then download the source files for this project
+Install stack, later used to build the [Haskell](https://www.haskell.org/) portion of this project either from the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository) or using the method described on their website. Then download the source files for this project
 <br/> `git clone https://github.com/AndreiUlmeyda/sway-cycle-workspaces.git`
 <br/> `cd sway-cycle-workspaces`
 ### If you are running Arch-Linux
