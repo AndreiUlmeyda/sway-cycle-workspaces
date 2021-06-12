@@ -15,8 +15,15 @@ sha256sums=('SKIP')
 validpgpkeys=()
 
 build() {
-	cd "$pkgname"
+	echo "source dir"
+	echo "$srcdir"
+	echo "pkg dir"
+	echo "$pkgdir"
+
+	cd "$srcdir"
 	git checkout arch-package
+
+	cd "$pkgname"
 	stack build --copy-bins
 }
 
