@@ -27,7 +27,7 @@ look like
 
 ## installation
 In case this did not come preinstalled on your linux distribution - it would be highly concerning if it did - you can choose one of two methods to install this tool. For both you will need to download the source files first and make sure at least one dependency ([stack](https://docs.haskellstack.org/en/stable/README/)) is installed manually.
-Install stack, later used to build the [Haskell](https://www.haskell.org/) portion of this project either from the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository) or using the method described on their website. Then download the source files for this project
+Install stack, later used to build the [Haskell](https://www.haskell.org/) portion of this project, either from the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository) or using the method described on their website. Then download the source files for this project
 <br/> `git clone https://github.com/AndreiUlmeyda/sway-cycle-workspaces.git`
 <br/> `cd sway-cycle-workspaces`
 ### If you are running Arch-Linux
