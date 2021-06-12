@@ -5,6 +5,24 @@ It was built to accomodate my specific use case where Mod-Key+Scroll-Up is suppo
 **By the time you read this it may be possible to produce the same behaviour by configuring sway directly. When I needed the feature I could not figure out a way to do it that way and I was eager to write a bit of Haskell, so here we are. Read the sway documentation more carefully than I did before installing additional software.**
 
 ## usage
+Most likely you will want to call this tool using some sort of hotkey. The most convenient setup for
+me is using the the mod key together with the mouse scroll wheel. A corresponding sway configuration could
+look like
+<br/> `bindsym --whole-window --border $mod+button4 exec 'cycle-workspaces next'`<br/>
+<br/> `bindsym --whole-window --border $mod+button5 exec 'cycle-workspaces previous'`<br/>
+
+## installation
+In case this did not come preinstalled on your linux distribution, which would be highly concerning if it did, you can choose one of two methods to install this tool. For both you will need to download the source files first and make sure at least one dependency is installed manually.
+Install [stack](https://docs.haskellstack.org/en/stable/README/), either from the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository) or using the method described on their website. Then download the source files for this project
+<br/> `git clone https://github.com/AndreiUlmeyda/sway-cycle-workspaces.git`<br/>
+<br/> `cd sway-cycle-workspaces`<br/>
+### If you are running Arch-Linux
+...then the best method would be to **build and install a proper package**. To this end a file called PKGBUILD resides in the directory 'distribution'. It can be assembled using the command 'makepkg' and the resulting file can be installed using your favourite package manager.
+<br/> `cd distribution`<br/>
+<br/> `makepkg`<br/>
+<br/> `sudo pacman -U sway-cycle-workspaces-0.0.1-1-x86_64.pkg.tar.zst`<br/>
+### **If not**
+...even more hard and demeaning manual labour is required.
 
 ## what it does
 Imagine a configuration of two monitors with 3 workspaces each:
@@ -15,7 +33,7 @@ Mod-Key+**Scroll-Up** would take the workspaces to the configuration
 with repeating Mod-Key+Scroll-Up presses leaving the focus unchanged.
 
 Repeated Mod-Key+**Scroll-Down** presses would, initially, return to the starting point
-<br/>`1 2* 3) (4 5 6)`,<br/>
+<br/>`(1 2* 3) (4 5 6)`,<br/>
 then to
 <br/>`(1* 2 3) (4 5 6)`<br/>
 and then remain there.
