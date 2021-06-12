@@ -16,6 +16,7 @@ validpgpkeys=()
 
 build() {
 	cd "$pkgname"
+	git checkout arch-package
 	stack build --copy-bins
 }
 
