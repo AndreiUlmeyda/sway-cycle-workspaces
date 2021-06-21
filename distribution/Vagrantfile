@@ -1,4 +1,4 @@
-# This is used to develop and test a Arch-Linux package.
+# This is used to develop and test an Arch-Linux package.
 #
 # A vanilla Arch-Linux virtual machine is started and a
 # script is supplied which is executed on the virtual

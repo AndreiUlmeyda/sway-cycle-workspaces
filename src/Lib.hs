@@ -14,23 +14,24 @@ import Mode (Mode (Next, Previous))
 
 newtype WorkspaceIndex = WorkspaceIndex String deriving (Show, Eq)
 
-changeWorkspace :: Mode -> [String] -> Either ErrorMessage WorkspaceIndex
+changeWorkspace :: Either ErrorMessage Mode -> [String] -> Either ErrorMessage WorkspaceIndex
 changeWorkspace mode workspaces
+  | Left errorMsg <- mode = Left errorMsg
   -- error out if relevant inputs are empty
   | length workspaces <= 1 = Left errorTooFewInputWorkspaces
   | any notThreeWordsLong workspaces = Left errorWrongInputLayout
   -- assume a single focused workspace
   | length (filter isFocused workspaces) /= 1 = Left errorNotExactlyOneFocusedWorkspace
   -- catch cases where there is no next/previous workspace
-  | Next <- mode,
+  | Right Next <- mode,
     (isFocused . last) workspaces =
     Left errorNoNextWorkspace
-  | Previous <- mode,
+  | Right Previous <- mode,
     (isFocused . head) workspaces =
     Left errorNoPreviousWorkspace
   -- determine the new workspace index
-  | Previous <- mode = (markAsResult . last) (takeWhile (not . isFocused) workspacesFromFocusedOutput)
-  | Next <- mode = (markAsResult . secondElement) (dropWhile (not . isFocused) workspacesFromFocusedOutput)
+  | Right Previous <- mode = (markAsResult . last) (takeWhile (not . isFocused) workspacesFromFocusedOutput)
+  | Right Next <- mode = (markAsResult . secondElement) (dropWhile (not . isFocused) workspacesFromFocusedOutput)
   | otherwise = Left errorUnexpectedInput
   where
     workspacesFromFocusedOutput = onlyFocusedOutput workspaces

@@ -6,6 +6,7 @@ module Errors
     errorNoPreviousWorkspace,
     errorNotExactlyOneFocusedWorkspace,
     errorUnexpectedInput,
+    errorIncorrectCommandLineArgument,
   )
 where
 
@@ -28,3 +29,6 @@ errorNotExactlyOneFocusedWorkspace = ErrorMessage "There should only be exactly 
 
 errorUnexpectedInput :: ErrorMessage
 errorUnexpectedInput = ErrorMessage "This error is not supposed to ever occur. If it nevertheless does, I would be grateful if you found the time to file a bug report, if possible, supplying the input which caused it."
+
+errorIncorrectCommandLineArgument :: ErrorMessage
+errorIncorrectCommandLineArgument = ErrorMessage "Missing or incorrect mode. The command line argument should be either 'next' or 'previous'"
