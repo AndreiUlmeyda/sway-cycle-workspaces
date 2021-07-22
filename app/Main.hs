@@ -2,7 +2,7 @@ module Main where
 
 import Errors (ErrorMessage (ErrorMessage))
 import Lib (WorkspaceIndex (WorkspaceIndex), changeWorkspace)
-import Mode (Mode, modeFromArgs)
+import Mode (modeFromArgs)
 import System.Environment (getArgs)
 
 main :: IO ()
