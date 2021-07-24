@@ -1,4 +1,4 @@
-module InputValidator (parseInput) where
+module InputValidation (parseInput) where
 
 import Errors
   ( ErrorMessage

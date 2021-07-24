@@ -1,4 +1,4 @@
-module Lib (changeWorkspace, WorkspaceIndex (WorkspaceIndex)) where
+module NewWorkspace (changeWorkspace, WorkspaceIndex (WorkspaceIndex)) where
 
 import Data.Either ()
 import Errors
