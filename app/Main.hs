@@ -7,7 +7,6 @@ import Mode (modeFromArgs)
 import System.Environment (getArgs)
 
 -- TODO move any code out of main in order to make it testable
--- TODO test auto discovery is set up, make sure tests are located inside of the correct test module
 main :: IO ()
 main = do
   mode <- fmap modeFromArgs getArgs

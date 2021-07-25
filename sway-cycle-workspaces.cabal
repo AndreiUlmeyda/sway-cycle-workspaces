@@ -56,6 +56,7 @@ test-suite new-workspace-focus-test
   main-is: Spec.hs
   other-modules:
       InputValidationSpec
+      ModeSpec
       NewWorkspaceSpec
       Paths_sway_cycle_workspaces
   hs-source-dirs:

@@ -9,7 +9,6 @@ import Errors
   , errorNoNextWorkspace)
 import Mode (Mode(Next, Previous))
 
--- TODO move deleted unit tests for lib to this module
 parseInput :: Either ErrorMessage Mode -> String -> Either ErrorMessage [String]
 parseInput mode input
   -- error out if relevant inputs are empty
@@ -17,10 +16,10 @@ parseInput mode input
  | any notThreeWordsLong workspaces = Left errorWrongInputLayout
  -- assume a single focused workspace
  | length (filter isFocused workspaces) /= 1 = Left errorNotExactlyOneFocusedWorkspace
+ -- catch cases where there is no next/previous workspace
  | Right Next <- mode,
      (isFocused . last) workspaces =
      Left errorNoNextWorkspace
- -- catch cases where there is no next/previous workspace
  | Right Previous <- mode,
    (isFocused . head) workspaces =
    Left errorNoPreviousWorkspace
