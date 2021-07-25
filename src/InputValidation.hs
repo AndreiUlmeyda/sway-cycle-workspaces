@@ -8,6 +8,7 @@ import Errors
   , errorNoPreviousWorkspace
   , errorNoNextWorkspace)
 import Mode (Mode(Next, Previous))
+import NewWorkspace (isFocused)
 
 parseInput :: Either ErrorMessage Mode -> String -> Either ErrorMessage [String]
 parseInput mode input
@@ -27,16 +28,5 @@ parseInput mode input
   where
     workspaces = lines input
 
--- TODO resolve duplicate code between this module and lib
--- TODO use safe variants of prelude functions
 notThreeWordsLong :: String -> Bool
 notThreeWordsLong = (/= 3) . length . words
-
-isFocused :: String -> Bool
-isFocused = (== "true") . getIsFocused
-
-getIsFocused :: String -> String
-getIsFocused = thirdElement . words
-
-thirdElement :: [a] -> a
-thirdElement = (!! 2)

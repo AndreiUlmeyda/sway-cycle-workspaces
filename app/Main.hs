@@ -6,7 +6,6 @@ import NewWorkspace (WorkspaceIndex (WorkspaceIndex), changeWorkspace)
 import Mode (modeFromArgs)
 import System.Environment (getArgs)
 
--- TODO move any code out of main in order to make it testable
 main :: IO ()
 main = do
   mode <- fmap modeFromArgs getArgs

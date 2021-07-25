@@ -1,4 +1,4 @@
-module NewWorkspace (changeWorkspace, WorkspaceIndex (WorkspaceIndex)) where
+module NewWorkspace (changeWorkspace, WorkspaceIndex (WorkspaceIndex), isFocused) where
 
 import Data.Either ()
 import Errors
@@ -34,6 +34,7 @@ isFocused = (== "true") . getIsFocused
 getIsFocused :: String -> String
 getIsFocused = thirdElement . words
 
+-- TODO use safe variants of prelude functions
 getOutput :: String -> String
 getOutput = head . words
 
