@@ -1,9 +1,18 @@
-module InputValidationSpec (spec) where
+module InputValidationSpec ( spec ) where
 
-import Test.Hspec (Spec, describe, it, shouldBe)
-import InputValidation (parseInput)
-import Mode (Mode (Previous, Next))
-import Errors (errorTooFewInputWorkspaces, errorWrongInputLayout, errorNotExactlyOneFocusedWorkspace, errorNoNextWorkspace, errorNoPreviousWorkspace)
+import Test.Hspec
+  ( Spec
+  , describe
+  , it
+  , shouldBe )
+import InputValidation ( parseInput )
+import Mode ( Mode ( Previous, Next ) )
+import Errors
+  ( errorTooFewInputWorkspaces
+  , errorWrongInputLayout
+  , errorNotExactlyOneFocusedWorkspace
+  , errorNoNextWorkspace
+  , errorNoPreviousWorkspace )
 
 spec :: Spec
 spec = describe "generating, from a mode and an input string, either an error message or a valid worspace description" $ do

@@ -1,10 +1,15 @@
-module NewWorkspaceSpec (spec) where
+module NewWorkspaceSpec ( spec ) where
 
 import Data.Either ()
-import Errors (errorIncorrectCommandLineArgument)
-import NewWorkspace (WorkspaceIndex (WorkspaceIndex), changeWorkspace)
-import Mode (Mode (Next, Previous))
-import Test.Hspec (describe, it, shouldBe, Spec)
+import Errors ( errorIncorrectCommandLineArgument )
+import NewWorkspace ( changeWorkspace )
+import Mode ( Mode ( Next, Previous ) )
+import Test.Hspec
+  ( describe
+  , it
+  , shouldBe
+  , Spec)
+import Types (WorkspaceIndex ( WorkspaceIndex ) )
 
 spec :: Spec
 spec = do

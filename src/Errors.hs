@@ -1,5 +1,5 @@
 module Errors
-  ( ErrorMessage (ErrorMessage),
+  ( ErrorMessage ( ErrorMessage ),
     errorTooFewInputWorkspaces,
     errorWrongInputLayout,
     errorNoNextWorkspace,

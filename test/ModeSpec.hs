@@ -1,8 +1,12 @@
-module ModeSpec (spec) where
+module ModeSpec ( spec ) where
 
-import Test.Hspec (Spec, describe, it, shouldBe)
-import Mode (modeFromArgs, Mode (Next, Previous))
-import Errors (errorIncorrectCommandLineArgument)
+import Test.Hspec
+  ( Spec
+  , describe
+  , it
+  , shouldBe )
+import Mode ( modeFromArgs, Mode ( Next, Previous ) )
+import Errors ( errorIncorrectCommandLineArgument )
 
 spec :: Spec
 spec = describe "determining a mode from the command line arguments" $ do

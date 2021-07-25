@@ -1,4 +1,4 @@
-module InputValidation (parseInput) where
+module InputValidation ( parseInput ) where
 
 import Errors
   ( ErrorMessage
@@ -6,9 +6,9 @@ import Errors
   , errorWrongInputLayout
   , errorNotExactlyOneFocusedWorkspace
   , errorNoPreviousWorkspace
-  , errorNoNextWorkspace)
-import Mode (Mode(Next, Previous))
-import NewWorkspace (isFocused)
+  , errorNoNextWorkspace )
+import Mode ( Mode ( Next, Previous ) )
+import NewWorkspace ( isFocused )
 
 parseInput :: Either ErrorMessage Mode -> String -> Either ErrorMessage [String]
 parseInput mode input
