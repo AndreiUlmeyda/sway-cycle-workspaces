@@ -20,23 +20,27 @@ and then remain there.
 
 ## usage
 Most likely you will want to call this tool using some sort of hotkey. The most convenient setup for
-me is using the the mod key together with the mouse scroll wheel. A corresponding sway configuration could
-look like
+me is using the the mod key together with the mouse scroll wheel and, simultaneously, using mod+shift+left/right
+as well as mod+shift+up/down, because redundancy saves lives in an engineering context or something ¯\_(^^)_/¯.
+A corresponding sway configuration could look like
 <br/> `bindsym --whole-window --border $mod+button4 exec 'cycle-workspaces next'`
 <br/> `bindsym --whole-window --border $mod+button5 exec 'cycle-workspaces previous'`
+<br/> `bindsym $mod+Shift+Right exec 'sway-cycle-workspaces next'`
+<br/> `bindsym $mod+Shift+Left exec 'sway-cycle-workspaces previous'`
+and so on and so forth.
 
 ## installation
-In case this did not come preinstalled on your linux distribution - it would be highly concerning if it did - you can choose one of two methods to install this tool. For both you will need to download the source files first and make sure at least one dependency ([stack](https://docs.haskellstack.org/en/stable/README/)) is installed manually.
+In case this package here did not come preinstalled on your linux distribution - and it would be highly concerning if it did - you can choose one of two methods to install this tool. For both you will need to download the source files first and make sure at least one dependency ([stack](https://docs.haskellstack.org/en/stable/README/)) is installed manually.
 Install stack, later used to build the [Haskell](https://www.haskell.org/) portion of this project, either from the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository) or using the method described on their website. Then download the source files for this project
 <br/> `git clone https://github.com/AndreiUlmeyda/sway-cycle-workspaces.git`
 <br/> `cd sway-cycle-workspaces`
 ### If you are running Arch-Linux
-...then the best method would be to **build and install a proper package**. To this end a file called PKGBUILD resides in the directory 'distribution'. It can be assembled using the command 'makepkg' and the resulting file can be installed using your favourite package manager.
+...then the best method would be to **build and install a proper package**. To this end a file called PKGBUILD resides inside of the directory 'distribution'. It can be assembled using the command 'makepkg' and the resulting file can be installed using your favourite package manager.
 <br/> `cd distribution`<br/>
 <br/> `makepkg`<br/>
 <br/> `sudo pacman -U sway-cycle-workspaces-0.0.1-1-x86_64.pkg.tar.zst`<br/>
-### **If not**
-...even more hard and demeaning manual labour is required.
+### **If not, though**
+...~~even more hard and demeaning manual labour is required.~~
 
 ## how it does it
 It queries the entire workspace configuration as exposed by the command line interface<br/>
