@@ -42,6 +42,13 @@ Install stack, later used to build the [Haskell](https://www.haskell.org/) porti
 
 ### **If not, though**
 ...~~even more hard and demeaning manual labour is required.~~
+Make sure all dependencies - bash, findutils, jq, sway (and stack, if you want to compile the haskell binary yourself) - are installed beforehand. 
+You could, then, try to clone this repository, as described above, and copy the 3 executables - a shell script, a jq script and a haskell binary - to suitable locations.
+Copy the file bin/sway-cycle-workspaces into a folder that is in your shells PATH.
+Copy the files bin/new-workspace-focus and bin/json-to-workspace-lines.jq into the folder /usr/lib/sway-cycle-workspaces/.
+Make sure everything is executable, as well.
+All things considered, this is ugly as all heck. If you find yourself doing that, please author an issue describing your distribution and I will try to provide a
+proper package for it. And if you want to supply one yourself, well, what are you waiting for? For climate change to reverse? Hmm?
 
 ## how it does it
 It queries the entire workspace configuration as exposed by the command line interface<br/>
