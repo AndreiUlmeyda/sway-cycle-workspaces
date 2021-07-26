@@ -1,29 +1,33 @@
 module NewWorkspace
-  ( changeWorkspace
-  , isFocused ) where
+  ( changeWorkspace,
+    isFocused,
+  )
+where
 
-import Errors ( ErrorMessage )
-import Mode ( Mode ( Next, Previous ) )
-import Types 
-  ( WorkspaceDescription
-  , WorkspaceDescriptionPart
-  , WorkspaceFocus
-  , WorkspaceIndex ( WorkspaceIndex )
-  , WorkspaceDisplay )
+import Errors (ErrorMessage)
+import Mode (Mode (Next, Previous))
+import Types
+  ( WorkspaceDescription,
+    WorkspaceDescriptionPart,
+    WorkspaceDisplay,
+    WorkspaceFocus,
+    WorkspaceIndex (WorkspaceIndex),
+  )
 
 changeWorkspace :: Either ErrorMessage Mode -> Either ErrorMessage [WorkspaceDescription] -> Either ErrorMessage WorkspaceIndex
 changeWorkspace mode workspaces
   | Left errorMsg <- mode = Left errorMsg
   | Left errorMsg <- workspaces = Left errorMsg
   | Right validMode <- mode,
-    Right validWorkspaces <- workspaces
-    = Right (changeWorkspace' validMode validWorkspaces)
+    Right validWorkspaces <- workspaces =
+    Right (changeWorkspace' validMode validWorkspaces)
 
 changeWorkspace' :: Mode -> [WorkspaceDescription] -> WorkspaceIndex
 changeWorkspace' mode workspaces
   | Previous <- mode = (getWorkspaceIndex . last) (takeWhile (not . isFocused) workspacesFromFocusedDisplay)
   | Next <- mode = (getWorkspaceIndex . secondElement) (dropWhile (not . isFocused) workspacesFromFocusedDisplay)
-  where workspacesFromFocusedDisplay = onlyFocusedDisplay workspaces
+  where
+    workspacesFromFocusedDisplay = onlyFocusedDisplay workspaces
 
 onlyFocusedDisplay :: [WorkspaceDescription] -> [WorkspaceDescription]
 onlyFocusedDisplay workspaces = filter isFocusedDisplay workspaces

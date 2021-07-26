@@ -1,9 +1,11 @@
 module Types
-  ( WorkspaceDescription
-  , WorkspaceDisplay
-  , WorkspaceIndex ( WorkspaceIndex )
-  , WorkspaceFocus
-  , WorkspaceDescriptionPart) where
+  ( WorkspaceDescription,
+    WorkspaceDisplay,
+    WorkspaceIndex (WorkspaceIndex),
+    WorkspaceFocus,
+    WorkspaceDescriptionPart,
+  )
+where
 
 type WorkspaceDescription = String
 

@@ -1,10 +1,12 @@
 module Mode
-  ( modeFromArgs
-  , Mode ( Next, Previous ) ) where
+  ( modeFromArgs,
+    Mode (Next, Previous),
+  )
+where
 
-import Errors ( ErrorMessage, errorIncorrectCommandLineArgument )
+import Errors (ErrorMessage, errorIncorrectCommandLineArgument)
 
-data Mode = Next | Previous deriving ( Show, Eq )
+data Mode = Next | Previous deriving (Show, Eq)
 
 type Argument = String
 
