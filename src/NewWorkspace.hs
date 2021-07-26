@@ -1,48 +1,46 @@
-module NewWorkspace (changeWorkspace, WorkspaceIndex (WorkspaceIndex), isFocused) where
+module NewWorkspace
+  ( changeWorkspace
+  , isFocused ) where
 
-import Data.Either ()
-import Errors
-  ( ErrorMessage,
-  )
-import Mode (Mode (Next, Previous))
+import Errors ( ErrorMessage )
+import Mode ( Mode ( Next, Previous ) )
+import Types 
+  ( WorkspaceDescription
+  , WorkspaceDescriptionPart
+  , WorkspaceFocus
+  , WorkspaceIndex ( WorkspaceIndex )
+  , WorkspaceDisplay )
 
-newtype WorkspaceIndex = WorkspaceIndex String deriving (Show, Eq)
-
-changeWorkspace :: Either ErrorMessage Mode -> Either ErrorMessage [String] -> Either ErrorMessage WorkspaceIndex
+changeWorkspace :: Either ErrorMessage Mode -> Either ErrorMessage [WorkspaceDescription] -> Either ErrorMessage WorkspaceIndex
 changeWorkspace mode workspaces
   | Left errorMsg <- mode = Left errorMsg
   | Left errorMsg <- workspaces = Left errorMsg
   | Right validMode <- mode,
     Right validWorkspaces <- workspaces
-    = changeWorkspace' validMode validWorkspaces
+    = Right (changeWorkspace' validMode validWorkspaces)
 
-changeWorkspace' :: Mode -> [String] -> Either a WorkspaceIndex
+changeWorkspace' :: Mode -> [WorkspaceDescription] -> WorkspaceIndex
 changeWorkspace' mode workspaces
-  | Previous <- mode = (markAsResult . last) (takeWhile (not . isFocused) workspacesFromFocusedOutput)
-  | Next <- mode = (markAsResult . secondElement) (dropWhile (not . isFocused) workspacesFromFocusedOutput)
-  where workspacesFromFocusedOutput = onlyFocusedOutput workspaces
-        markAsResult = Right . WorkspaceIndex . getWorkspaceIndex
+  | Previous <- mode = (getWorkspaceIndex . last) (takeWhile (not . isFocused) workspacesFromFocusedDisplay)
+  | Next <- mode = (getWorkspaceIndex . secondElement) (dropWhile (not . isFocused) workspacesFromFocusedDisplay)
+  where workspacesFromFocusedDisplay = onlyFocusedDisplay workspaces
 
-onlyFocusedOutput :: [String] -> [String]
-onlyFocusedOutput workspaces = filter isFocusedOutput workspaces
+onlyFocusedDisplay :: [WorkspaceDescription] -> [WorkspaceDescription]
+onlyFocusedDisplay workspaces = filter isFocusedDisplay workspaces
   where
-    isFocusedOutput workspace = getOutput workspace == (getOutput . head) (filter isFocused workspaces)
+    isFocusedDisplay workspace = getDisplay workspace == (getDisplay . head) (filter isFocused workspaces)
 
-isFocused :: String -> Bool
-isFocused = (== "true") . getIsFocused
+isFocused :: WorkspaceFocus -> Bool
+isFocused = (== "true") . thirdElement . words
 
-getIsFocused :: String -> String
-getIsFocused = thirdElement . words
+getDisplay :: WorkspaceDescription -> WorkspaceDisplay
+getDisplay = head . words
 
--- TODO use safe variants of prelude functions
-getOutput :: String -> String
-getOutput = head . words
+getWorkspaceIndex :: WorkspaceDescription -> WorkspaceIndex
+getWorkspaceIndex = WorkspaceIndex . secondElement . words
 
-getWorkspaceIndex :: String -> String
-getWorkspaceIndex = secondElement . words
-
-secondElement :: [a] -> a
+secondElement :: [WorkspaceDescriptionPart] -> WorkspaceDescriptionPart
 secondElement = (!! 1)
 
-thirdElement :: [a] -> a
+thirdElement :: [WorkspaceDescriptionPart] -> WorkspaceDescriptionPart
 thirdElement = (!! 2)
