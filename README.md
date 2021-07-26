@@ -21,7 +21,7 @@ and then remain there.
 ## usage
 Most likely you will want to call this tool using some sort of hotkey. The most convenient setup for
 me is using the the mod key together with the mouse scroll wheel and, simultaneously, using mod+shift+left/right
-as well as mod+shift+up/down, because redundancy saves lives in an engineering context or something ¯\_(^^)_/¯.
+as well as mod+shift+up/down, because redundancy saves lives in an engineering context or something ¯\\_(^^)_/¯.
 A corresponding sway configuration could look like
 <br/> `bindsym --whole-window --border $mod+button4 exec 'cycle-workspaces next'`
 <br/> `bindsym --whole-window --border $mod+button5 exec 'cycle-workspaces previous'`
@@ -36,9 +36,10 @@ Install stack, later used to build the [Haskell](https://www.haskell.org/) porti
 <br/> `cd sway-cycle-workspaces`
 ### If you are running Arch-Linux
 ...then the best method would be to **build and install a proper package**. To this end a file called PKGBUILD resides inside of the directory 'distribution'. It can be assembled using the command 'makepkg' and the resulting file can be installed using your favourite package manager.
-<br/> `cd distribution`<br/>
-<br/> `makepkg`<br/>
-<br/> `sudo pacman -U sway-cycle-workspaces-0.0.1-1-x86_64.pkg.tar.zst`<br/>
+<br/> `cd distribution`
+<br/> `makepkg`
+<br/> `sudo pacman -U sway-cycle-workspaces-0.0.1-1-x86_64.pkg.tar.zst`
+
 ### **If not, though**
 ...~~even more hard and demeaning manual labour is required.~~
 
