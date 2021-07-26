@@ -1,6 +1,6 @@
 # Maintainer: Adrian Schurz schurz.adrian@gmail.com>
 pkgname=sway-cycle-workspaces
-pkgver=0.0.1
+pkgver=0.1.0
 pkgrel=1
 pkgdesc="A tool to switch sway workspaces up or down on the currently focused monitor"
 arch=('x86_64')
