@@ -14,13 +14,11 @@ import Types
     WorkspaceIndex (WorkspaceIndex),
   )
 
-changeWorkspace :: Either ErrorMessage Mode -> Either ErrorMessage [WorkspaceDescription] -> Either ErrorMessage WorkspaceIndex
+changeWorkspace :: Mode -> Either ErrorMessage [WorkspaceDescription] -> Either ErrorMessage WorkspaceIndex
 changeWorkspace mode workspaces
-  | Left errorMsg <- mode = Left errorMsg
   | Left errorMsg <- workspaces = Left errorMsg
-  | Right validMode <- mode,
-    Right validWorkspaces <- workspaces =
-    Right (changeWorkspace' validMode validWorkspaces)
+  | Right validWorkspaces <- workspaces =
+    Right (changeWorkspace' mode validWorkspaces)
 
 changeWorkspace' :: Mode -> [WorkspaceDescription] -> WorkspaceIndex
 changeWorkspace' mode workspaces

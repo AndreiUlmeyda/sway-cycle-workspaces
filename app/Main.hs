@@ -3,13 +3,13 @@ module Main where
 import Errors ( ErrorMessage ( ErrorMessage ) )
 import InputValidation ( parseInput )
 import NewWorkspace ( changeWorkspace )
-import Mode ( modeFromArgs )
+import Mode ( parseArgumentsAndProvideHelpText )
 import System.Environment ( getArgs )
 import Types ( WorkspaceIndex ( WorkspaceIndex ) )
 
 main :: IO ()
 main = do
-  mode <- fmap modeFromArgs getArgs
+  mode <- parseArgumentsAndProvideHelpText
   input <- fmap (parseInput mode) getContents
   printResultOrAbort (changeWorkspace mode input)
 

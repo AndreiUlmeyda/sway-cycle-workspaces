@@ -1,17 +1,41 @@
 module Mode
-  ( modeFromArgs,
+  ( parseArgumentsAndProvideHelpText,
     Mode (Next, Previous),
   )
 where
 
-import Errors (ErrorMessage, errorIncorrectCommandLineArgument)
+import Errors (ErrorMessage)
+-- cmd line argument parsing
+import Options.Applicative
+import Data.Semigroup ((<>))
 
-data Mode = Next | Previous deriving (Show, Eq)
+data Mode = Next | Previous deriving (Eq)
 
-type Argument = String
+parseArgumentsAndProvideHelpText = execParser argumentParser
 
-modeFromArgs :: [Argument] -> Either ErrorMessage Mode
-modeFromArgs arguments
-  | "previous" `elem` arguments = Right Previous
-  | "next" `elem` arguments = Right Next
-  | otherwise = Left errorIncorrectCommandLineArgument
+argumentParser :: ParserInfo Mode
+argumentParser = info modeParserAndHelpText programDescription
+
+modeParserAndHelpText :: Parser Mode
+modeParserAndHelpText = modeParser <**> helper
+
+programDescription :: InfoMod Mode
+programDescription = fullDesc <> progDesc "Switch to either the next or previous workspace on the focused display if such a thing exists." <> header "sway-cycle-workspaces"
+
+modeParser :: Parser Mode
+modeParser = hsubparser (commandNext <> commandPrevious)
+
+commandNext :: Mod CommandFields Mode
+commandNext = command "next" parserInfoNext
+
+parserInfoNext :: ParserInfo Mode
+parserInfoNext = info parserModeNext infoModNext
+
+parserModeNext :: Parser Mode
+parserModeNext = pure Next
+
+infoModNext :: InfoMod Mode
+infoModNext = progDesc "Switch to the next workspace"
+
+commandPrevious :: Mod CommandFields Mode
+commandPrevious = command "previous" (info (pure Previous) (progDesc "Switch to the previous workspace"))
