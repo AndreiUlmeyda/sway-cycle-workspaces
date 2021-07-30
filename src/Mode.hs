@@ -4,13 +4,13 @@ module Mode
   )
 where
 
-import Errors (ErrorMessage)
 -- cmd line argument parsing
+
 import Options.Applicative
-import Data.Semigroup ((<>))
 
 data Mode = Next | Previous deriving (Eq)
 
+parseArgumentsAndProvideHelpText :: IO Mode
 parseArgumentsAndProvideHelpText = execParser argumentParser
 
 argumentParser :: ParserInfo Mode

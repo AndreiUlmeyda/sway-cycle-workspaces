@@ -1,11 +1,10 @@
 module Main where
 
-import Errors ( ErrorMessage ( ErrorMessage ) )
-import InputValidation ( parseInput )
-import NewWorkspace ( changeWorkspace )
-import Mode ( parseArgumentsAndProvideHelpText )
-import System.Environment ( getArgs )
-import Types ( WorkspaceIndex ( WorkspaceIndex ) )
+import Errors (ErrorMessage (ErrorMessage))
+import InputValidation (parseInput)
+import Mode (parseArgumentsAndProvideHelpText)
+import NewWorkspace (changeWorkspace)
+import Types (WorkspaceIndex (WorkspaceIndex))
 
 main :: IO ()
 main = do

@@ -5,7 +5,7 @@ module Errors
     errorNoNextWorkspace,
     errorNoPreviousWorkspace,
     errorNotExactlyOneFocusedWorkspace,
-    errorUnexpectedInput
+    errorUnexpectedInput,
   )
 where
 
