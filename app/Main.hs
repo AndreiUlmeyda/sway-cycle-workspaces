@@ -3,28 +3,24 @@
 module Main where
 
 import Errors (ErrorMessage (ErrorMessage))
-import InputValidation (parseInput)
-import Mode (parseArgumentsAndProvideHelpText)
-import NewWorkspace (changeWorkspace)
 import Types (WorkspaceIndex (WorkspaceIndex))
-import Turtle (textToLines, Shell, Line, ExitCode, Text, textToLine, view, shellStrict, empty, unsafeTextToLine)
-import Data.Maybe (fromJust, Maybe)
+import Turtle (Shell, Line, ExitCode, Text, textToLine, view, shellStrict, empty, unsafeTextToLine)
 import Data.Text (replace)
+import Mode (parseArgumentsAndProvideHelpText)
 
 main :: IO ()
-main = view (preformat =<< getWorkspaceDescription)
-
---workspaceDescriptionJson :: Shell Line
---workspaceDescriptionJson = fromJust . textToLine <$> fmap snd getWorkspaceDescription
+main = do
+  mode <- parseArgumentsAndProvideHelpText
+  view (preformat =<< getWorkspaceDescription)
 
 getWorkspaceDescription :: Shell (ExitCode, Text)
 getWorkspaceDescription = shellStrict "swaymsg --raw --type get_workspaces" empty
 
 preformat :: (ExitCode, Text) -> Shell (ExitCode, Text)
-preformat input = shellStrict "./json-to-workspace-lines.jq" (workspaceDescriptionFrom input)
+preformat input = shellStrict "./bin/json-to-workspace-lines.jq" (workspaceDescriptionFrom input)
 
 workspaceDescriptionFrom :: (ExitCode, Text) -> Shell Line
-workspaceDescriptionFrom= pure . textToLine' . (replace "\n" "") .snd
+workspaceDescriptionFrom= pure . textToLine' . replace "\n" "" .snd
 
 textToLine' :: Text -> Line
 textToLine' input
@@ -32,7 +28,6 @@ textToLine' input
   | Just line <- input' = line
   where input' = textToLine input
 
---  |Text
 --main = do
 --  mode <- parseArgumentsAndProvideHelpText
 --  input <- fmap (parseInput mode) getContents
