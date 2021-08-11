@@ -11,21 +11,14 @@ import Types (WorkspaceIndex (WorkspaceIndex))
 main :: IO ()
 main = do
   mode <- parseArgumentsAndProvideHelpText
-  view $ fmap (determineWorkspaceNumber mode) (jsonToLineFormat =<< getWorkspaceDescriptionJson)
-
-determineWorkspaceNumber :: Mode -> (ExitCode, Text) -> String
-determineWorkspaceNumber mode = unpackResultOrAbort . newWorkspaceNumber mode . parseInput mode . unpack . ignoreExitCode
-
-unpackResultOrAbort :: Either ErrorMessage WorkspaceIndex -> String
-unpackResultOrAbort (Left (ErrorMessage errorMsg)) = error errorMsg
-unpackResultOrAbort (Right (WorkspaceIndex index)) = index
+  view (determineWorkspaceNumber mode =<< jsonToLineFormat =<< getWorkspaceDescriptionJson)
 
 getWorkspaceDescriptionJson :: Shell (ExitCode, Text)
 getWorkspaceDescriptionJson = shellStrict "swaymsg --raw --type get_workspaces" empty
 
 -- TODO use proper paths for supporting scripts
 jsonToLineFormat :: (ExitCode, Text) -> Shell (ExitCode, Text)
-jsonToLineFormat = (shellStrict "./bin/json-to-workspace-lines.jq") . resultAsLinesWithoutNewlines
+jsonToLineFormat = shellStrict "./bin/json-to-workspace-lines.jq" . resultAsLinesWithoutNewlines
 
 resultAsLinesWithoutNewlines :: (ExitCode, Text) -> Shell Line
 resultAsLinesWithoutNewlines = pure . toLine . stripNewLines . ignoreExitCode
@@ -43,3 +36,10 @@ toLine input
   | Just line <- input' = line
   where
     input' = textToLine input
+
+determineWorkspaceNumber :: Mode -> (ExitCode, Text) -> Shell String
+determineWorkspaceNumber mode = unpackResultOrAbort . newWorkspaceNumber mode . parseInput mode . unpack . ignoreExitCode
+
+unpackResultOrAbort :: Either ErrorMessage WorkspaceIndex -> Shell String
+unpackResultOrAbort (Left (ErrorMessage errorMsg)) = error errorMsg
+unpackResultOrAbort (Right (WorkspaceIndex index)) = pure index
