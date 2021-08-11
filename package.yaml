@@ -33,6 +33,7 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    - -XOverloadedStrings
     dependencies:
     - sway-cycle-workspaces
 

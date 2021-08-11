@@ -49,7 +49,7 @@ executable new-workspace-focus
       Paths_sway_cycle_workspaces
   hs-source-dirs:
       app
-  ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N -XOverloadedStrings
   build-depends:
       base >=4.7 && <5
     , optparse-applicative
