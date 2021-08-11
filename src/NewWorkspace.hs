@@ -1,5 +1,5 @@
 module NewWorkspace
-  ( changeWorkspace,
+  ( newWorkspaceNumber,
     isFocused,
   )
 where
@@ -14,8 +14,8 @@ import Types
     WorkspaceIndex (WorkspaceIndex),
   )
 
-changeWorkspace :: Mode -> Either ErrorMessage [WorkspaceDescription] -> Either ErrorMessage WorkspaceIndex
-changeWorkspace mode workspaces
+newWorkspaceNumber :: Mode -> Either ErrorMessage [WorkspaceDescription] -> Either ErrorMessage WorkspaceIndex
+newWorkspaceNumber mode workspaces
   | Left errorMsg <- workspaces = Left errorMsg
   | Right validWorkspaces <- workspaces =
     Right (changeWorkspace' mode validWorkspaces)
