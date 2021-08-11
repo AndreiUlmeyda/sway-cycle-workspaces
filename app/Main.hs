@@ -36,10 +36,10 @@ ignoreExitCode = snd
 stripNewLines :: Text -> Text
 stripNewLines = replace "\n" ""
 
--- TODO properly handle each case
+-- TODO align error handling with the rest of the application
 toLine :: Text -> Line
 toLine input
-  | Nothing <- input' = error "derp"
+  | Nothing <- input' = error "The workspace description obtained from swaymsg couldn't be parsed as lines of text"
   | Just line <- input' = line
   where
     input' = textToLine input
