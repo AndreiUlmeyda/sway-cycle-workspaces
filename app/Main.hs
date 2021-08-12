@@ -1,6 +1,6 @@
 module Main where
 
-import Data.Text (replace, unpack, append, pack)
+import Data.Text (append, pack, replace, unpack)
 import Errors (ErrorMessage (ErrorMessage))
 import InputValidation (parseInput)
 import Mode (Mode, parseArgumentsAndProvideHelpText)
