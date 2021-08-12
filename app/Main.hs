@@ -1,6 +1,6 @@
 module Main where
 
-import Data.Text (replace, unpack)
+import Data.Text (replace, unpack, append, pack)
 import Errors (ErrorMessage (ErrorMessage))
 import InputValidation (parseInput)
 import Mode (Mode, parseArgumentsAndProvideHelpText)
@@ -11,7 +11,10 @@ import Types (WorkspaceIndex (WorkspaceIndex))
 main :: IO ()
 main = do
   mode <- parseArgumentsAndProvideHelpText
-  view (determineWorkspaceNumber mode =<< jsonToLineFormat =<< getWorkspaceDescriptionJson)
+  view (switchToWorkspace =<< determineWorkspaceNumber mode =<< jsonToLineFormat =<< getWorkspaceDescriptionJson)
+
+switchToWorkspace :: String -> Shell (ExitCode, Text)
+switchToWorkspace workspaceIndex = shellStrict (append "swaymsg workspace number " (pack workspaceIndex)) empty
 
 getWorkspaceDescriptionJson :: Shell (ExitCode, Text)
 getWorkspaceDescriptionJson = shellStrict "swaymsg --raw --type get_workspaces" empty
