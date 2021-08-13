@@ -25,7 +25,7 @@ library:
   source-dirs: src
 
 executables:
-  new-workspace-focus:
+  sway-cycle-workspaces:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -38,7 +38,7 @@ executables:
     - sway-cycle-workspaces
 
 tests:
-  new-workspace-focus-test:
+  sway-cycle-workspaces-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:

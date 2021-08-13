@@ -19,9 +19,8 @@ switchToWorkspace workspaceIndex = shellStrict (append "swaymsg workspace number
 getWorkspaceDescriptionJson :: Shell (ExitCode, Text)
 getWorkspaceDescriptionJson = shellStrict "swaymsg --raw --type get_workspaces" empty
 
--- TODO use proper paths for supporting scripts
 jsonToLineFormat :: (ExitCode, Text) -> Shell (ExitCode, Text)
-jsonToLineFormat = shellStrict "./bin/json-to-workspace-lines.jq" . resultAsLinesWithoutNewlines
+jsonToLineFormat = shellStrict "/usr/lib/sway-cycle-workspaces/json-to-workspace-lines.jq" . resultAsLinesWithoutNewlines
 
 resultAsLinesWithoutNewlines :: (ExitCode, Text) -> Shell Line
 resultAsLinesWithoutNewlines = pure . toLine . stripNewLines . ignoreExitCode

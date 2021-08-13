@@ -1,6 +1,6 @@
 # Maintainer: Adrian Schurz schurz.adrian@gmail.com>
 pkgname=sway-cycle-workspaces
-pkgver=0.1.0
+pkgver=0.2.0
 pkgrel=1
 pkgdesc="A tool to switch sway workspaces up or down on the currently focused monitor"
 arch=('x86_64')
@@ -30,6 +30,5 @@ package() {
 
 	cd "$pkgname"
 	cp bin/sway-cycle-workspaces "$pkgdir/usr/bin/sway-cycle-workspaces"
-	cp bin/new-workspace-focus "$pkgdir/usr/lib/${pkgname}/new-workspace-focus"
 	cp bin/json-to-workspace-lines.jq "$pkgdir/usr/lib/${pkgname}/json-to-workspace-lines.jq"
 }

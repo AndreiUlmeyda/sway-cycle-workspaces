@@ -43,7 +43,7 @@ library
     , turtle
   default-language: Haskell2010
 
-executable new-workspace-focus
+executable sway-cycle-workspaces
   main-is: Main.hs
   other-modules:
       Paths_sway_cycle_workspaces
@@ -58,7 +58,7 @@ executable new-workspace-focus
     , turtle
   default-language: Haskell2010
 
-test-suite new-workspace-focus-test
+test-suite sway-cycle-workspaces-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
