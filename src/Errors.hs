@@ -5,7 +5,6 @@ module Errors
     errorNoNextWorkspace,
     errorNoPreviousWorkspace,
     errorNotExactlyOneFocusedWorkspace,
-    errorUnexpectedInput,
   )
 where
 
@@ -25,6 +24,3 @@ errorNoPreviousWorkspace = ErrorMessage "There is no previous workspace since th
 
 errorNotExactlyOneFocusedWorkspace :: ErrorMessage
 errorNotExactlyOneFocusedWorkspace = ErrorMessage "There should only be exactly one focused workspace. Exiting..."
-
-errorUnexpectedInput :: ErrorMessage
-errorUnexpectedInput = ErrorMessage "This error is not supposed to ever occur. If it nevertheless does, I would be grateful if you found the time to file a bug report, if possible, supplying the input which caused it."
