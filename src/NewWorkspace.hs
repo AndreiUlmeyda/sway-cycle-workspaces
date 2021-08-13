@@ -4,7 +4,6 @@ module NewWorkspace
   )
 where
 
-import Errors (ErrorMessage)
 import Mode (Mode (Next, Previous))
 import Types
   ( WorkspaceDescription,
@@ -14,14 +13,8 @@ import Types
     WorkspaceIndex (WorkspaceIndex),
   )
 
-newWorkspaceNumber :: Mode -> Either ErrorMessage [WorkspaceDescription] -> Either ErrorMessage WorkspaceIndex
+newWorkspaceNumber :: Mode -> [WorkspaceDescription] -> WorkspaceIndex
 newWorkspaceNumber mode workspaces
-  | Left errorMsg <- workspaces = Left errorMsg
-  | Right validWorkspaces <- workspaces =
-    Right (changeWorkspace' mode validWorkspaces)
-
-changeWorkspace' :: Mode -> [WorkspaceDescription] -> WorkspaceIndex
-changeWorkspace' mode workspaces
   | Previous <- mode = (getWorkspaceIndex . last) (takeWhile (not . isFocused) workspacesFromFocusedDisplay)
   | Next <- mode = (getWorkspaceIndex . secondElement) (dropWhile (not . isFocused) workspacesFromFocusedDisplay)
   where

@@ -1,35 +1,25 @@
 module Main where
 
 import Data.Text (append, pack, replace, unpack)
-import Errors (ErrorMessage (ErrorMessage))
+import Errors (descriptionRetrievalError, formatConversionError, reportShellCommandErrors, workspaceChangeError)
 import InputValidation (parseInput)
 import Mode (Mode, parseArgumentsAndProvideHelpText)
 import NewWorkspace (newWorkspaceNumber)
-import Turtle (ExitCode (ExitSuccess), Line, Shell, Text, empty, shellStrict, textToLine, view)
+import Turtle (ExitCode, Line, Shell, Text, empty, shellStrict, textToLine, view)
 import Types (WorkspaceIndex (WorkspaceIndex))
 
 main :: IO ()
 main = do
   mode <- parseArgumentsAndProvideHelpText
   view
-    ( switchToWorkspace
+    ( reportShellCommandErrors workspaceChangeError
+        =<< switchToWorkspace
         =<< determineWorkspaceNumber mode
-        =<< reportErrors formatConversionError
+        =<< reportShellCommandErrors formatConversionError
         =<< jsonToLineFormat
-        =<< reportErrors descriptionRetrievalError
+        =<< reportShellCommandErrors descriptionRetrievalError
         =<< getWorkspaceDescriptionJson
     )
-
-reportErrors :: String -> (ExitCode, Text) -> Shell Text
-reportErrors errorDescription (exitCode, resultText)
-  | exitCode == ExitSuccess = pure resultText
-  | otherwise = error (errorDescription ++ " Exitcode: " ++ show exitCode)
-
-descriptionRetrievalError :: String
-descriptionRetrievalError = "Tried to execute 'swaymsg' to retrieve a workspace layout but the command failed."
-
-formatConversionError :: String
-formatConversionError = "Tried to execute 'jq' to reformat the output of 'swaymsg' but the command failed."
 
 switchToWorkspace :: String -> Shell (ExitCode, Text)
 switchToWorkspace workspaceIndex = shellStrict (append "swaymsg workspace number " (pack workspaceIndex)) empty
@@ -55,8 +45,8 @@ toLine input
     input' = textToLine input
 
 determineWorkspaceNumber :: Mode -> Text -> Shell String
-determineWorkspaceNumber mode = unpackResultOrAbort . newWorkspaceNumber mode . parseInput mode . unpack
+determineWorkspaceNumber mode = pure . fromWorkspaceIndex . newWorkspaceNumber mode . parseInput mode . unpack
 
-unpackResultOrAbort :: Either ErrorMessage WorkspaceIndex -> Shell String
-unpackResultOrAbort (Left (ErrorMessage errorMsg)) = error errorMsg
-unpackResultOrAbort (Right (WorkspaceIndex index)) = pure index
+-- TODO implement show correctly or move this to the respective type declaration
+fromWorkspaceIndex :: WorkspaceIndex -> String
+fromWorkspaceIndex (WorkspaceIndex index) = index

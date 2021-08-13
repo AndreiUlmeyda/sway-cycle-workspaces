@@ -5,13 +5,20 @@ module Errors
     errorNoNextWorkspace,
     errorNoPreviousWorkspace,
     errorNotExactlyOneFocusedWorkspace,
+    descriptionRetrievalError,
+    formatConversionError,
+    reportShellCommandErrors,
+    workspaceChangeError,
   )
 where
+
+import Data.Text
+import Turtle (ExitCode (ExitSuccess), Shell)
 
 newtype ErrorMessage = ErrorMessage String deriving (Show, Eq)
 
 errorTooFewInputWorkspaces :: ErrorMessage
-errorTooFewInputWorkspaces = ErrorMessage "Only zero or one lines/workspaces provided. There is nothing to do, exiting..."
+errorTooFewInputWorkspaces = ErrorMessage "Only zero or one lines/workspaces provided. There is nothing to do, exiting...."
 
 errorWrongInputLayout :: ErrorMessage
 errorWrongInputLayout = ErrorMessage "Each input line must contain 3 items following the pattern 'output workspacename focused' where focused is either 'true' or 'false'. Exiting..."
@@ -24,3 +31,17 @@ errorNoPreviousWorkspace = ErrorMessage "There is no previous workspace since th
 
 errorNotExactlyOneFocusedWorkspace :: ErrorMessage
 errorNotExactlyOneFocusedWorkspace = ErrorMessage "There should only be exactly one focused workspace. Exiting..."
+
+descriptionRetrievalError :: ErrorMessage
+descriptionRetrievalError = ErrorMessage "Tried to execute 'swaymsg' to retrieve a workspace layout but the command failed."
+
+formatConversionError :: ErrorMessage
+formatConversionError = ErrorMessage "Tried to execute 'jq' to reformat the output of 'swaymsg' but the command failed."
+
+workspaceChangeError :: ErrorMessage
+workspaceChangeError = ErrorMessage "Tried to execute 'swaymsg' to change the workspace but the command failed."
+
+reportShellCommandErrors :: ErrorMessage -> (ExitCode, Text) -> Shell Text
+reportShellCommandErrors errorDescription (exitCode, resultText)
+  | exitCode == ExitSuccess = pure resultText
+  | otherwise = error (show errorDescription ++ " Exitcode: " ++ show exitCode)

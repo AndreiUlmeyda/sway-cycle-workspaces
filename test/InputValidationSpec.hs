@@ -16,6 +16,7 @@ import Test.Hspec
     shouldBe,
   )
 
+-- TODO figure out how to test calls to 'error' or stop using it
 spec :: Spec
 spec = describe "generating, from a mode and an input string, either an error message or a valid worspace description" $ do
   it "given a valid mode but otherwise empty input should generate an error message" $ do
