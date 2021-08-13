@@ -5,13 +5,31 @@ import Errors (ErrorMessage (ErrorMessage))
 import InputValidation (parseInput)
 import Mode (Mode, parseArgumentsAndProvideHelpText)
 import NewWorkspace (newWorkspaceNumber)
-import Turtle (ExitCode, Line, Shell, Text, empty, shellStrict, textToLine, view)
+import Turtle (ExitCode (ExitSuccess), Line, Shell, Text, empty, shellStrict, textToLine, view)
 import Types (WorkspaceIndex (WorkspaceIndex))
 
 main :: IO ()
 main = do
   mode <- parseArgumentsAndProvideHelpText
-  view (switchToWorkspace =<< determineWorkspaceNumber mode =<< jsonToLineFormat =<< getWorkspaceDescriptionJson)
+  view
+    ( switchToWorkspace
+        =<< determineWorkspaceNumber mode
+        =<< reportErrors formatConversionError
+        =<< jsonToLineFormat
+        =<< reportErrors descriptionRetrievalError
+        =<< getWorkspaceDescriptionJson
+    )
+
+reportErrors :: String -> (ExitCode, Text) -> Shell Text
+reportErrors errorDescription (exitCode, resultText)
+  | exitCode == ExitSuccess = pure resultText
+  | otherwise = error (errorDescription ++ " Exitcode: " ++ show exitCode)
+
+descriptionRetrievalError :: String
+descriptionRetrievalError = "Tried to execute 'swaymsg' to retrieve a workspace layout but the command failed."
+
+formatConversionError :: String
+formatConversionError = "Tried to execute 'jq' to reformat the output of 'swaymsg' but the command failed."
 
 switchToWorkspace :: String -> Shell (ExitCode, Text)
 switchToWorkspace workspaceIndex = shellStrict (append "swaymsg workspace number " (pack workspaceIndex)) empty
@@ -19,14 +37,11 @@ switchToWorkspace workspaceIndex = shellStrict (append "swaymsg workspace number
 getWorkspaceDescriptionJson :: Shell (ExitCode, Text)
 getWorkspaceDescriptionJson = shellStrict "swaymsg --raw --type get_workspaces" empty
 
-jsonToLineFormat :: (ExitCode, Text) -> Shell (ExitCode, Text)
+jsonToLineFormat :: Text -> Shell (ExitCode, Text)
 jsonToLineFormat = shellStrict "/usr/lib/sway-cycle-workspaces/json-to-workspace-lines.jq" . resultAsLinesWithoutNewlines
 
-resultAsLinesWithoutNewlines :: (ExitCode, Text) -> Shell Line
-resultAsLinesWithoutNewlines = pure . toLine . stripNewLines . ignoreExitCode
-
-ignoreExitCode :: (ExitCode, Text) -> Text
-ignoreExitCode = snd
+resultAsLinesWithoutNewlines :: Text -> Shell Line
+resultAsLinesWithoutNewlines = pure . toLine . stripNewLines
 
 stripNewLines :: Text -> Text
 stripNewLines = replace "\n" ""
@@ -39,8 +54,8 @@ toLine input
   where
     input' = textToLine input
 
-determineWorkspaceNumber :: Mode -> (ExitCode, Text) -> Shell String
-determineWorkspaceNumber mode = unpackResultOrAbort . newWorkspaceNumber mode . parseInput mode . unpack . ignoreExitCode
+determineWorkspaceNumber :: Mode -> Text -> Shell String
+determineWorkspaceNumber mode = unpackResultOrAbort . newWorkspaceNumber mode . parseInput mode . unpack
 
 unpackResultOrAbort :: Either ErrorMessage WorkspaceIndex -> Shell String
 unpackResultOrAbort (Left (ErrorMessage errorMsg)) = error errorMsg
