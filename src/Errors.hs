@@ -18,7 +18,7 @@ import Turtle (ExitCode (ExitSuccess), Shell)
 newtype ErrorMessage = ErrorMessage String deriving (Show, Eq)
 
 errorTooFewInputWorkspaces :: ErrorMessage
-errorTooFewInputWorkspaces = ErrorMessage "Only zero or one lines/workspaces provided. There is nothing to do, exiting...."
+errorTooFewInputWorkspaces = ErrorMessage "Sway (swaymsg) reported only or zero workspaces. There is nothing to do, exiting..."
 
 errorWrongInputLayout :: ErrorMessage
 errorWrongInputLayout = ErrorMessage "Each input line must contain 3 items following the pattern 'output workspacename focused' where focused is either 'true' or 'false'. Exiting..."
