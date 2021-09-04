@@ -13,8 +13,8 @@ load 'lib/bats-mock/stub'
 }
 
 @test "2 An empty workspace configuration should lead to failure" {
-  swaymsg-output="'{}'"
-  stub swaymsg "--raw --type get_workspaces : echo ${swaymsg-output}"
+  SWAYMSG_OUTPUT="'{}'"
+  stub swaymsg "--raw --type get_workspaces : echo ${SWAYMSG_OUTPUT}"
 
   run ../bin/sway-cycle-workspaces next
 
