@@ -15,13 +15,13 @@ spec :: Spec
 spec = do
   describe "determining a new workspace number from previous workspaces and command line arguments" $ do
     it "given three workspaces with the second one focused and mode 'Previous' should return the first workspace" $ do
-      let workspaceDescription = Right ["output 1 false", "output 2 true", "output 3 false"]
-       in newWorkspaceNumber Previous workspaceDescription `shouldBe` Right (WorkspaceIndex "1")
+      let workspaceDescription = ["output 1 false", "output 2 true", "output 3 false"]
+       in newWorkspaceNumber Previous workspaceDescription `shouldBe` WorkspaceIndex "1"
 
     it "given focus on the first workspace and mode 'Next' should return the second" $ do
-      let workspaceDescription = Right ["output 1 true", "output 2 false"]
-       in newWorkspaceNumber Next workspaceDescription `shouldBe` Right (WorkspaceIndex "2")
+      let workspaceDescription = ["output 1 true", "output 2 false"]
+       in newWorkspaceNumber Next workspaceDescription `shouldBe` WorkspaceIndex "2"
 
     it "given workspaces on multiple outputs it should only respect the focused output" $ do
-      let workspaceDescription = Right ["output1 1 true", "output2 2 false", "output1 3 false"]
-       in newWorkspaceNumber Next workspaceDescription `shouldBe` Right (WorkspaceIndex "3")
+      let workspaceDescription = ["output1 1 true", "output2 2 false", "output1 3 false"]
+       in newWorkspaceNumber Next workspaceDescription `shouldBe` WorkspaceIndex "3"
