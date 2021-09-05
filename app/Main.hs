@@ -36,7 +36,6 @@ resultAsLinesWithoutNewlines = pure . toLine . stripNewLines
 stripNewLines :: Text -> Text
 stripNewLines = replace "\n" ""
 
--- TODO align error handling with the rest of the application
 toLine :: Text -> Line
 toLine input
   | Nothing <- input' = error "The workspace description obtained from swaymsg couldn't be parsed as lines of text"

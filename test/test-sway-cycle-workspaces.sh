@@ -13,8 +13,8 @@ load 'lib/bats-mock/stub'
 }
 
 @test "2 If an insufficient number of workspaces are given to determine a next or previous one an error message should indicate that" {
-  SWAYMSG_OUTPUT="'{}'"
-  stub swaymsg "--raw --type get_workspaces : echo ${SWAYMSG_OUTPUT}"
+  EMPTY_SWAYMSG_WORKSPACE_QUERY_RESULT="'{}'"
+  stub swaymsg "--raw --type get_workspaces : echo ${EMPTY_SWAYMSG_WORKSPACE_QUERY_RESULT}"
 
   run ../bin/sway-cycle-workspaces next
 
@@ -22,7 +22,7 @@ load 'lib/bats-mock/stub'
   assert_line --partial "zero or one lines/workspaces provided"
 }
 
-@test "3 If the first swaymsg call fails an error message should indicate that" {
+@test "3 If the first swaymsg call (query workspaces) fails an error message should indicate that" {
   stub swaymsg "--raw --type get_workspaces : exit 1"
 
   run ../bin/sway-cycle-workspaces next
@@ -31,13 +31,16 @@ load 'lib/bats-mock/stub'
   assert_line --partial "Tried to execute 'swaymsg' to retrieve a workspace layout but"
 }
 
-@test "4" {
-  stub swaymsg "--raw --type get_workspaces : exit 1"
+@test "4 If the second swaymsg call (set new workspace) fails an error message should indicate that" {
+  SWAYMSG_WORKSPACE_QUERY_RESULT="'[{\"output\":\"a\",\"name\":\"1\",\"focused\":\"true\"}, {\"output\":\"a\",\"name\":\"2\",\"focused\":\"false\"}]'"
+  stub swaymsg \
+    "--raw --type get_workspaces : echo ${SWAYMSG_WORKSPACE_QUERY_RESULT}" \
+    "workspace number 2 : exit 1"
 
   run ../bin/sway-cycle-workspaces next
 
   assert_failure
-  assert_line --partial "Tried to execute 'swaymsg' to retrieve a workspace layout but"
+  assert_line --partial "Tried to execute 'swaymsg' to change the workspace but"
 }
 
 teardown() {
