@@ -11,7 +11,7 @@ type WorkspaceDescription = String
 
 type WorkspaceDisplay = String
 
-newtype WorkspaceIndex = WorkspaceIndex String deriving Eq
+newtype WorkspaceIndex = WorkspaceIndex String deriving (Eq)
 
 instance Show WorkspaceIndex where
   show (WorkspaceIndex index) = index

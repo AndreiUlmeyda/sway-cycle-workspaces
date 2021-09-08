@@ -1,11 +1,11 @@
 module Main where
 
 import Errors (descriptionRetrievalError, formatConversionError, reportShellCommandErrors, workspaceChangeError)
+import ExternalCommands (getWorkspaceDescriptionJson, jsonToLineFormat, switchToWorkspace)
 import InputValidation (parseInput)
 import Mode (parseArgumentsAndProvideHelpText)
 import NewWorkspace (determineWorkspaceNumber)
 import Turtle (view)
-import ExternalCommands (switchToWorkspace, jsonToLineFormat, getWorkspaceDescriptionJson)
 
 main :: IO ()
 main = do

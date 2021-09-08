@@ -1,5 +1,6 @@
 module InputValidationSpec (spec) where
 
+import Control.Exception.Base (evaluate)
 import Errors
   ( errorNoNextWorkspace,
     errorNoPreviousWorkspace,
@@ -12,9 +13,11 @@ import Mode (Mode (Next, Previous))
 import Test.Hspec
   ( Spec,
     describe,
+    errorCall,
     it,
-    shouldBe, shouldThrow, errorCall,  )
-import Control.Exception.Base (evaluate)
+    shouldBe,
+    shouldThrow,
+  )
 
 spec :: Spec
 spec = describe "generating, from a mode and an input string, either an error message or a valid worspace description" $ do

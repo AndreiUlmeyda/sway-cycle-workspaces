@@ -6,7 +6,7 @@ module ExternalCommands
 where
 
 import Data.Text (Text, append, pack, replace)
-import Turtle (ExitCode, shellStrict, empty, Line, textToLine)
+import Turtle (ExitCode, Line, empty, shellStrict, textToLine)
 import Turtle.Shell (Shell)
 
 switchToWorkspace :: String -> Shell (ExitCode, Text)
