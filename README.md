@@ -3,6 +3,7 @@ A tool to **switch** [sway](https://swaywm.org/) **workspaces** in a particular 
 It was built to accomodate my specific use case where Mod-Key+Scroll-Up is supposed to go to the next workspace on the focused monitor and Mod-Key+Scroll-Down to do the reverse.
 
 **By the time you read this it may be possible to produce the same behaviour by configuring sway directly. When I needed the feature I could not figure out a way to do it that way and I was eager to write a bit of Haskell, so here we are. Read the sway documentation more carefully than I did before installing additional software.**
+<br/>
 **Update: The relevant swaymsg functionality is provided by the commands 'swaymsg workspace next_on_output' and related ones. The last difference is that sway-cycle-workspaces does not wrap around when reaching the first or last workspace. Use it only if that detail is important to you.**
 
 ## what it does
