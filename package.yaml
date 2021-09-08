@@ -21,6 +21,9 @@ dependencies:
 - turtle
 - text
 
+default-extensions:
+  - OverloadedStrings
+
 library:
   source-dirs: src
 
@@ -33,7 +36,6 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
-    - -XOverloadedStrings
     dependencies:
     - sway-cycle-workspaces
 

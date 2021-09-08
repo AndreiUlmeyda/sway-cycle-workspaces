@@ -28,6 +28,7 @@ source-repository head
 library
   exposed-modules:
       Errors
+      ExternalCommands
       InputValidation
       Mode
       NewWorkspace
@@ -36,6 +37,8 @@ library
       Paths_sway_cycle_workspaces
   hs-source-dirs:
       src
+  default-extensions:
+      OverloadedStrings
   build-depends:
       base >=4.7 && <5
     , optparse-applicative
@@ -49,7 +52,9 @@ executable sway-cycle-workspaces
       Paths_sway_cycle_workspaces
   hs-source-dirs:
       app
-  ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N -XOverloadedStrings
+  default-extensions:
+      OverloadedStrings
+  ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , optparse-applicative
@@ -67,6 +72,8 @@ test-suite sway-cycle-workspaces-test
       Paths_sway_cycle_workspaces
   hs-source-dirs:
       test
+  default-extensions:
+      OverloadedStrings
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       QuickCheck

@@ -28,15 +28,15 @@ runuser -l vagrant -c 'yay -S --noconfirm stack'
 
 # Download the software repository under test, try to build its PKGBUILD and then install the package.
 runuser -l vagrant -c 'git clone https://github.com/AndreiUlmeyda/sway-cycle-workspaces.git;'
-runuser -l vagrant -c 'cd sway-cycle-workspaces/distribution; makepkg; sudo pacman --noconfirm -U sway-cycle-workspaces-0.0.1-1-x86_64.pkg.tar.zst;'
+runuser -l vagrant -c 'cd sway-cycle-workspaces/distribution; makepkg; sudo pacman --noconfirm -U *-x86_64.pkg.tar.zst;'
 
-# Run the main executable. A bunch of errors is expected since sway is not running.
+# Run the main executable. A bunch of errors are expected to occur since sway is not running.
 # Errors which are NOT SUPPOSED TO OCCUR are ones due to the main executable referencing its
-# dependencies using wrong paths.
+# dependencies using incorrect paths.
 runuser -l vagrant -c 'sway-cycle-workspaces;'
 
 # Uninstall the package.
-pacman -Rns sway-cycle-workspaces
+pacman -Rns --noconfirm sway-cycle-workspaces
 
 SCRIPT
 

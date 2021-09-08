@@ -3,7 +3,7 @@ load 'lib/bats-assert/load'
 load 'lib/bats-file/load'
 load 'lib/bats-mock/stub'
 
-@test "1 A missing command should return an error indicating the reason" {
+@test "1 If a command is missing an error message should indicate that" {
   stub swaymsg
 
   run ../bin/sway-cycle-workspaces
