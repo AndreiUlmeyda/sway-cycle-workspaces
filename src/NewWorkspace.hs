@@ -1,5 +1,6 @@
 module NewWorkspace
-  ( newWorkspaceNumber,
+  ( determineWorkspaceNumber,
+    newWorkspaceNumber,
     isFocused,
   )
 where
@@ -12,6 +13,10 @@ import Types
     WorkspaceFocus,
     WorkspaceIndex (WorkspaceIndex),
   )
+import Data.Text (Text, unpack)
+
+determineWorkspaceNumber :: Applicative f => Mode -> (String -> [WorkspaceDescription]) -> Text -> f String
+determineWorkspaceNumber mode input = pure . show . newWorkspaceNumber mode . input . unpack
 
 newWorkspaceNumber :: Mode -> [WorkspaceDescription] -> WorkspaceIndex
 newWorkspaceNumber mode workspaces
