@@ -14,6 +14,7 @@ import Types
     WorkspaceFocus,
     WorkspaceIndex (WorkspaceIndex),
   )
+import Prelude
 
 determineWorkspaceNumber :: Applicative f => Mode -> (String -> [WorkspaceDescription]) -> Text -> f String
 determineWorkspaceNumber mode input = pure . show . newWorkspaceNumber mode . input . unpack

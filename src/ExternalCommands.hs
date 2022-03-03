@@ -8,6 +8,7 @@ where
 import Data.Text (Text, append, pack, replace)
 import Turtle (ExitCode, Line, empty, shellStrict, textToLine)
 import Turtle.Shell (Shell)
+import Prelude
 
 switchToWorkspace :: String -> Shell (ExitCode, Text)
 switchToWorkspace workspaceIndex = shellStrict (append "swaymsg workspace number " (pack workspaceIndex)) empty

@@ -23,16 +23,35 @@ dependencies:
 
 default-extensions:
   - OverloadedStrings
+  - DerivingStrategies
 
 library:
   source-dirs: src
+  ghc-options:
+    - -O2
+    - -Wall
+    - -Wincomplete-uni-patterns
+    - -Wmonomorphism-restriction
+    - -Wimplicit-prelude
+    - -Wmissing-local-signatures
+    - -Wmissing-export-lists
+    - -Wmissing-home-modules
+    - -Widentities
+    - -Wredundant-constraints
+    - -Wpartial-fields
+    - -Wall-missed-specialisations
+    - -Wcpp-undef
+    - -Wmissing-deriving-strategies
+    - -Wunused-packages
+    - -Wunused-type-patterns
+    - -Wcompat
+    - -Wsafe
 
 executables:
   sway-cycle-workspaces:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
-    - -O2
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N

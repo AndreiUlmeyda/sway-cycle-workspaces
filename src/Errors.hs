@@ -12,10 +12,11 @@ module Errors
   )
 where
 
-import Data.Text
+import Data.Text (Text)
 import Turtle (ExitCode (ExitSuccess), Shell)
+import Prelude
 
-newtype ErrorMessage = ErrorMessage String deriving (Show, Eq)
+newtype ErrorMessage = ErrorMessage String deriving stock (Show, Eq)
 
 errorTooFewInputWorkspaces :: ErrorMessage
 errorTooFewInputWorkspaces = ErrorMessage "Sway (swaymsg) reported only or zero workspaces. There is nothing to do, exiting..."

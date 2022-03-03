@@ -9,6 +9,7 @@ import Errors
   )
 import Mode (Mode (Next, Previous))
 import NewWorkspace (isFocused)
+import Prelude
 
 parseInput :: Mode -> String -> [String]
 parseInput mode input
