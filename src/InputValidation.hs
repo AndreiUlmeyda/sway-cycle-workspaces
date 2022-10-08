@@ -21,10 +21,10 @@ parseInput mode input
   -- catch cases where there is no next/previous workspace
   | Next <- mode,
     (isFocused . last) workspaces =
-    Left errorNoNextWorkspace
+      Left errorNoNextWorkspace
   | Previous <- mode,
     (isFocused . head) workspaces =
-    Left errorNoPreviousWorkspace
+      Left errorNoPreviousWorkspace
   | otherwise = Right workspaces
   where
     workspaces = lines input

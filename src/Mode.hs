@@ -7,8 +7,23 @@ where
 -- cmd line argument parsing
 
 import Options.Applicative
+  ( CommandFields,
+    InfoMod,
+    Mod,
+    Parser,
+    ParserInfo,
+    command,
+    execParser,
+    fullDesc,
+    header,
+    helper,
+    hsubparser,
+    info,
+    progDesc,
+    (<**>),
+  )
 
-data Mode = Next | Previous deriving (Eq)
+data Mode = Next | Previous deriving stock (Eq)
 
 parseArgumentsAndProvideHelpText :: IO Mode
 parseArgumentsAndProvideHelpText = execParser argumentParser

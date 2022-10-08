@@ -1,48 +1,66 @@
-name:                sway-cycle-workspaces
-version:             0.1.0.0
-github:              "AndreiUlmeyda/sway-cycle-workspaces"
-license:             "Unlicense"
-author:              "Adrian Schurz"
-maintainer:          "ulmeyda.smile@gmail.com"
-copyright:           "2021 Adrian Schurz"
+name: sway-cycle-workspaces
+version: 0.1.0.0
+github: "AndreiUlmeyda/sway-cycle-workspaces"
+license: "Unlicense"
+author: "Adrian Schurz"
+maintainer: "ulmeyda.smile@gmail.com"
+copyright: "2021 Adrian Schurz"
 
 extra-source-files:
-- README.md
-- LICENSE
+  - README.md
+  - LICENSE
 
-synopsis:            A tool to switch workspaces up or down on the currently focused monitor.
-category:            Sway
+synopsis: A tool to switch workspaces up or down on the currently focused monitor.
+category: Sway
 
-description:         Please see the README on GitHub at <https://github.com/AndreiUlmeyda/sway-cycle-workspaces/blob/master/README.md>
+description: Please see the README on GitHub at <https://github.com/AndreiUlmeyda/sway-cycle-workspaces/blob/master/README.md>
+
+default-extensions: DerivingStrategies
 
 dependencies:
-- base >= 4.7 && < 5
-- optparse-applicative
+  - base >= 4.7 && < 5
+  - optparse-applicative
 
 library:
   source-dirs: src
+  ghc-options:
+    - -O2
+    - -Wall
+    - -Wincomplete-uni-patterns
+    - -Wmonomorphism-restriction
+    - -Wmissing-local-signatures
+    - -Wmissing-export-lists
+    - -Wmissing-home-modules
+    - -Widentities
+    - -Wredundant-constraints
+    - -Wpartial-fields
+    - -Wcpp-undef
+    - -Wmissing-deriving-strategies
+    - -Wunused-packages
+    - -Wunused-type-patterns
+    - -Wcompat
 
 executables:
   new-workspace-focus:
-    main:                Main.hs
-    source-dirs:         app
+    main: Main.hs
+    source-dirs: app
     ghc-options:
-    - -O2
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -O2
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - sway-cycle-workspaces
+      - sway-cycle-workspaces
 
 tests:
   new-workspace-focus-test:
-    main:                Spec.hs
-    source-dirs:         test
+    main: Spec.hs
+    source-dirs: test
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - sway-cycle-workspaces
-    - hspec
-    - QuickCheck
+      - sway-cycle-workspaces
+      - hspec
+      - QuickCheck

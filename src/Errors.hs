@@ -9,7 +9,7 @@ module Errors
   )
 where
 
-newtype ErrorMessage = ErrorMessage String deriving (Show, Eq)
+newtype ErrorMessage = ErrorMessage String deriving stock (Show, Eq)
 
 errorTooFewInputWorkspaces :: ErrorMessage
 errorTooFewInputWorkspaces = ErrorMessage "Only zero or one lines/workspaces provided. There is nothing to do, exiting..."

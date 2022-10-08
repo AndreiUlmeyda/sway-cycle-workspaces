@@ -11,7 +11,7 @@ type WorkspaceDescription = String
 
 type WorkspaceDisplay = String
 
-newtype WorkspaceIndex = WorkspaceIndex String deriving (Show, Eq)
+newtype WorkspaceIndex = WorkspaceIndex String deriving stock (Show, Eq)
 
 type WorkspaceFocus = String
 

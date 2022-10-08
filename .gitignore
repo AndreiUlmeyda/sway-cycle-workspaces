@@ -1,3 +1,4 @@
 .stack-work/
 distribution/arch-box.sh
 *.iml
+bin/new-workspace-focus
