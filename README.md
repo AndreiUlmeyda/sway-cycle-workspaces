@@ -1,3 +1,5 @@
+![example workflow](https://github.com/AndreiUlmeyda/sway-cycle-workspaces/actions/workflows/ci.yml/badge.svg)
+
 # sway-cycle-workspaces
 A tool to **switch** [sway](https://swaywm.org/) **workspaces** in a particular way, namely **either up or down considering only the monitor/output containing the focused window**.
 It was built to accomodate my specific use case where Mod-Key+Scroll-Up is supposed to go to the next workspace on the focused monitor and Mod-Key+Scroll-Down to do the reverse.
