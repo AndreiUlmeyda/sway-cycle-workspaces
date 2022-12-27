@@ -1,6 +1,6 @@
 cabal-version: 2.2
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -34,6 +34,8 @@ library
       Types
   other-modules:
       Paths_sway_cycle_workspaces
+  autogen-modules:
+      Paths_sway_cycle_workspaces
   hs-source-dirs:
       src
   default-extensions:
@@ -47,6 +49,8 @@ library
 executable new-workspace-focus
   main-is: Main.hs
   other-modules:
+      Paths_sway_cycle_workspaces
+  autogen-modules:
       Paths_sway_cycle_workspaces
   hs-source-dirs:
       app
@@ -65,6 +69,8 @@ test-suite new-workspace-focus-test
   other-modules:
       InputValidationSpec
       NewWorkspaceSpec
+      Paths_sway_cycle_workspaces
+  autogen-modules:
       Paths_sway_cycle_workspaces
   hs-source-dirs:
       test
